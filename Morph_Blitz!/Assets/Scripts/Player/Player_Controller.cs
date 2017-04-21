@@ -4,29 +4,95 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour 
 {
-
-	[SerializeField] private float _MovePower = 9; // The force added to move
 	[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
-	[SerializeField] private float _MaxVelocity = 100; // The time of smooth
+
+	//1st form
+	[Header("Variable of 1st Form")]
+	[SerializeField] private float _MovePower = 9; // The force added to move
+	[SerializeField] private float _MaxVelocity = 100; // The max velocity the player can do
 	[SerializeField] private float _RotatePower = 9; // The force added to rotate
 	[SerializeField] private float _MaxAngularVelocity = 1; // The maximum velocity the player can rotate at.
+	[SerializeField] private float _PlayerAdherence = 2; // The Adherence of the player
+
+	[Header("Variable of 2nd Form")]
+	//2nd form
+	[SerializeField] private float _YellowMovePower = 15; // The force added to move in 2nd mode
+	[SerializeField] private float _YellowMAXVelocity = 140; // The max velocity in 2nd mode
+	[SerializeField] private float _YellowRotatePower = 7.2f; // The force added to rotate in 2nd mode
+	[SerializeField] private float _YellowMaxAngularVelocity = 0.5f; // The maximum velocity the player can rotate at in 2nd mode
+	[SerializeField] private float _YellowMAXAdherence = 1; // The max Adherence in 2nd mode
+
+	[Header("Variable of 3rd Form")]
+	//3rd form
+	[SerializeField] private float _BlueMovePower = 3; // The force added to move in 3rd mode
+	[SerializeField] private float _BlueMAXVelocity = 60; // The max velocity in 3rd mode
+	[SerializeField] private float _BlueRotatePower = 11.5f; // The force added to rotate in 3rd mode
+	[SerializeField] private float _BlueMAXAngularVelocity = 1.5f; // The maximum velocity the player can rotate at in 3rd mode
+	[SerializeField] private float _BlueMAXAdherence = 0; // The max Adherence in 3rd mode
+
+	[Header("Other")]
+	private float _rotate = 0;//the rotation power of the player
+	private float _velocity = 0;//the velocity of the player
+	private float _maxRotate = 0;//the max rotation of the player
+	private float _maxVelocity = 0;//the max velocity of the player
+	private float _adherence = 0;//the adherence of the player
+
+	public GameObject PrincipalBody;//define the principalBody
 
 	private Rigidbody _Rigidbody;
 
+	private void Awake()
+	{
+		PrincipalBody = GameObject.Find ("Body");
+		_Rigidbody = GetComponent<Rigidbody>();
+	}
+
 	private void Start()
 	{
-		_Rigidbody = GetComponent<Rigidbody>();
+		
 	}
 		
 	public void Move( float _move, float _rot)
 	{
+		//compare the tag for see what kind we have
+		if(PrincipalBody.gameObject.CompareTag("PlayerMod1"))
+		{
+			_adherence = _PlayerAdherence;
+
+			_maxRotate = _MaxAngularVelocity;
+			_maxVelocity = _MaxVelocity;
+
+			_rotate = _rot * (_RotatePower * 10);
+			_velocity = _move * (_MovePower * 10);
+		}
+		else if(PrincipalBody.gameObject.CompareTag("PlayerMod2"))
+		{
+			_adherence = _YellowMAXAdherence;
+
+			_maxRotate = _YellowMaxAngularVelocity;
+			_maxVelocity = _YellowMAXVelocity;
+
+			_rotate = _rot *(_YellowRotatePower * 10);
+			_velocity = _move *(_YellowMovePower * 10);
+		}
+		else if(PrincipalBody.gameObject.CompareTag("PlayerMod3"))
+		{
+			_adherence = _BlueMAXAdherence;
+
+			_maxRotate = _BlueMAXAngularVelocity;
+			_maxVelocity = _BlueMAXVelocity;
+
+			_rotate = _rot *(_BlueRotatePower * 10);
+			_velocity = _move *(_BlueMovePower * 10);
+		}
+
 		//Rotate player
 		if (_rot != 0) 
 		{
-			_Rigidbody.AddRelativeTorque(0, _rot * (_RotatePower * 10), 0);
-			if (_Rigidbody.angularVelocity.magnitude > _MaxAngularVelocity) 
+			_Rigidbody.AddRelativeTorque(0, _rotate, 0);
+			if (_Rigidbody.angularVelocity.magnitude > _maxRotate) 
 			{
-				_Rigidbody.angularVelocity = _Rigidbody.angularVelocity.normalized * _MaxAngularVelocity;
+				_Rigidbody.angularVelocity = _Rigidbody.angularVelocity.normalized * _maxRotate;
 			} 
 		}
 		else
@@ -37,16 +103,19 @@ public class Player_Controller : MonoBehaviour
 		//Move Player
 		if (_move != 0) 
 		{
-			_Rigidbody.AddRelativeForce (0, 0, _move * (_MovePower * 10));
-			if (_Rigidbody.velocity.magnitude > _MaxVelocity) 
+			_Rigidbody.AddRelativeForce (0, 0, _velocity);
+			if (_Rigidbody.velocity.magnitude > _maxVelocity) 
 			{
-				_Rigidbody.velocity = _Rigidbody.velocity.normalized * _MaxVelocity;
+				_Rigidbody.velocity = _Rigidbody.velocity.normalized * _maxVelocity;
 			} 
 		}
 		else
 		{
 			_Rigidbody.velocity *= _SmoothPower;
 		}
+
+		//player Adherence
+		_Rigidbody.AddRelativeForce (0, -_adherence, 0);
 	}
 }
 
