@@ -16,8 +16,8 @@ public class EnemyType1 : EnemyGlobal
 	// Use this for initialization
 	void Start () 
 	{
-		_rb = GetComponent<Rigidbody> ();
 		Player = GameObject.Find ("Body");
+		_rb = GetComponent<Rigidbody> ();
 		EnemyActivator = GameObject.Find ("EnemySpawnController");
 	}
 	
