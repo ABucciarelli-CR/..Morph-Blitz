@@ -24,11 +24,11 @@ public class Player_Controller : MonoBehaviour
 
 	[Header("Variable of 3rd Form")]
 	//3rd form
-	[SerializeField] private float _BlueMovePower = 3; // The force added to move in 3rd mode
-	[SerializeField] private float _BlueMAXVelocity = 60; // The max velocity in 3rd mode
-	[SerializeField] private float _BlueRotatePower = 11.5f; // The force added to rotate in 3rd mode
-	[SerializeField] private float _BlueMAXAngularVelocity = 1.5f; // The maximum velocity the player can rotate at in 3rd mode
-	[SerializeField] private float _BlueMAXAdherence = 0; // The max Adherence in 3rd mode
+	[SerializeField] private float _RedMovePower = 3; // The force added to move in 3rd mode
+	[SerializeField] private float _RedMAXVelocity = 60; // The max velocity in 3rd mode
+	[SerializeField] private float _RedRotatePower = 11.5f; // The force added to rotate in 3rd mode
+	[SerializeField] private float _RedMAXAngularVelocity = 1.5f; // The maximum velocity the player can rotate at in 3rd mode
+	[SerializeField] private float _RedMAXAdherence = 0; // The max Adherence in 3rd mode
 
 	[Header("Other")]
 	private float _rotate = 0;//the rotation power of the player
@@ -77,13 +77,13 @@ public class Player_Controller : MonoBehaviour
 		}
 		else if(PrincipalBody.gameObject.CompareTag("PlayerMod3"))
 		{
-			_adherence = _BlueMAXAdherence;
+			_adherence = _RedMAXAdherence;
 
-			_maxRotate = _BlueMAXAngularVelocity;
-			_maxVelocity = _BlueMAXVelocity;
+			_maxRotate = _RedMAXAngularVelocity;
+			_maxVelocity = _RedMAXVelocity;
 
-			_rotate = _rot *(_BlueRotatePower * 10);
-			_velocity = _move *(_BlueMovePower * 10);
+			_rotate = _rot *(_RedRotatePower * 10);
+			_velocity = _move *(_RedMovePower * 10);
 		}
 
 		//Rotate player
