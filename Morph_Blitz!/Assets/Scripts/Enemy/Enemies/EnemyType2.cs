@@ -8,7 +8,7 @@ public class EnemyType2 : EnemyGlobal
 
 	void Awake ()
 	{
-		Enemy = GameObject.Find ("EN2");
+		//Enemy = GameObject.Find ("EN2");
 	}
 	// Use this for initialization
 	void Start () 
@@ -25,8 +25,8 @@ public class EnemyType2 : EnemyGlobal
 		{
 			if (!EnemyActivator.gameObject.CompareTag ("EnemyType2ON")) 
 			{
-				Enemy.transform.parent = null;
-				Rigidbody _rb = Enemy.AddComponent<Rigidbody> ();
+				transform.parent = null;
+				Rigidbody _rb = gameObject.AddComponent<Rigidbody> ();
 				_rb.mass = 1;
 			}
 		}
@@ -38,7 +38,7 @@ public class EnemyType2 : EnemyGlobal
 		{
 			if (EnemyActivator.gameObject.CompareTag ("EnemyType2ON")) 
 			{
-				Enemy.transform.parent = Player.transform;
+				transform.parent = Player.transform;
 				Destroy(_rb);
 			}
 		}

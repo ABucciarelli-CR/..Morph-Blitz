@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour 
 {
+
 	[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
+
+	[Header("Minimal Valor of Player's attribute")]
+	[SerializeField] private float _MinVelocity = 50;
+	[SerializeField] private float _MinAngularVelocity = .1f;
+	[SerializeField] private float _MinAdherence = 0;
 
 	//1st form
 	[Header("Variable of 1st Form")]
@@ -30,30 +36,86 @@ public class Player_Controller : MonoBehaviour
 	[SerializeField] private float _RedMAXAngularVelocity = 1; // The maximum velocity the player can rotate at in 3rd mode
 	[SerializeField] private float _RedMAXAdherence = 2; // The max Adherence in 3rd mode
 
-	[Header("Enemy Depotentation")]
-	[Header("Enemy Type1")]
-	//enemy type1 PowerDown modifier
+	private int _childNum = 0;//counter of child
+	private int _initialChild = 4;//counter of initial child
 
-	[Header("Other")]
+	[Header("Enemy Depotentation")]
+	//enemy type1 PowerDown modifier
+	[Header("Enemy Type1")]
+	[SerializeField] private float _BlueDepoweredMaxVelocity = 0; //depower the velocity
+	[SerializeField] private float _BlueDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
+	[SerializeField] private float _BlueDepoweredAdherence = 0;//depower the edherence
+
+	[Header("Enemy Type2")]
+	[SerializeField] private float _YellowDepoweredMaxVelocity = 0; //depower the velocity
+	[SerializeField] private float _YellowDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
+	[SerializeField] private float _YellowDepoweredAdherence = 0;//depower the edherence
+
+	[Header("Enemy Type3")]
+	[SerializeField] private float _RedDepoweredMaxVelocity = 0; //depower the velocity
+	[SerializeField] private float _RedDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
+	[SerializeField] private float _RedDepoweredAdherence = 0;//depower the edherence
+
 	private float _rotate = 0;//the rotation power of the player
 	private float _velocity = 0;//the velocity of the player
 	private float _maxRotate = 0;//the max rotation of the player
 	private float _maxVelocity = 0;//the max velocity of the player
 	private float _adherence = 0;//the adherence of the player
 
+	//player modificator with enemy attached
+	private float _velocityModifier = 0;//the modifier of velocity with the enemy
+	private float _angularVelocityModifier = 0;//the modifier of angular velocity with the enemy
+	private float _adherenceModifier = 0;//the modifier of adherence with the enemy
+
 	public GameObject PrincipalBody;//define the principalBody
+	public GameObject EnemySpawn; //define the enemy controller
 
 	private Rigidbody _Rigidbody;
 
 	private void Awake()
 	{
 		PrincipalBody = GameObject.Find ("Body");
+		EnemySpawn = GameObject.Find ("EnemySpawnController");
 		_Rigidbody = GetComponent<Rigidbody>();
 	}
 
-	private void Start()
+	private void Update()
 	{
-		
+		//TODO : fare il danneggiamento dai nemici
+		_childNum = PrincipalBody.transform.childCount - _initialChild;
+		if (EnemySpawn.CompareTag ("EnemyType1ON")) 
+		{
+			_adherence = _PlayerAdherence;
+
+			_maxRotate = _MaxAngularVelocity;
+			_maxVelocity = _MaxVelocity;
+		} 
+		else if (EnemySpawn.CompareTag ("EnemyType2ON")) 
+		{
+			_adherence = _PlayerAdherence;
+
+			_maxRotate = _MaxAngularVelocity;
+			_maxVelocity = _MaxVelocity;
+		} 
+		else if (EnemySpawn.CompareTag ("EnemyType3ON")) 
+		{
+			_adherence = _PlayerAdherence;
+
+			_maxRotate = _MaxAngularVelocity;
+			_maxVelocity = _MaxVelocity;
+		} 
+		else 
+		{
+
+			_velocityModifier = 0;
+			_angularVelocityModifier = 0;
+			_adherenceModifier = 0;
+
+			_adherence = _PlayerAdherence;
+
+			_maxRotate = _MaxAngularVelocity;
+			_maxVelocity = _MaxVelocity;
+		}
 	}
 		
 	public void Move( float _move, float _rot)
