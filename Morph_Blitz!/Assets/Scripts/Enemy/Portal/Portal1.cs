@@ -10,6 +10,8 @@ public class Portal1 : PortalTriggerGeneral
 	// Use this for initialization
 	void Start () 
 	{
+		EnemyActivator = GameObject.Find ("EnemySpawnController");
+
 		portalON = GameObject.Find ("Sphere1On");
 		portalOFF = GameObject.Find ("Sphere1Off");
 
@@ -22,6 +24,7 @@ public class Portal1 : PortalTriggerGeneral
 	{
 		if (triggered && !GameObject.FindWithTag("PlayerMod1")) 
 		{
+			EnemyActivator.gameObject.tag = "EnemyType1ON";
 			portalON.SetActive (false);
 			portalOFF.SetActive (true);
 		}
