@@ -6,6 +6,7 @@ public abstract class PortalTriggerGeneral : MonoBehaviour
 {
 	[HideInInspector]public bool triggered = false;
 	[HideInInspector]public GameObject EnemyActivator;//define the enemy activator
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -20,7 +21,10 @@ public abstract class PortalTriggerGeneral : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		triggered = true;
+		if(other.gameObject.name == "Body")
+		{
+			triggered = true;
+		}
 	}
 
 	void OnTriggerExit(Collider other)

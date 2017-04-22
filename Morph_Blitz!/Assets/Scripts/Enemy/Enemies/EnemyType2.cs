@@ -32,7 +32,7 @@ public class EnemyType2 : EnemyGlobal
 		}
 	}
 
-	void OnTriggerEnter (Collider other)
+	void OnCollisionEnter (Collision other)
 	{
 		if (other.gameObject.name == "Body" && transform.parent == null)
 		{

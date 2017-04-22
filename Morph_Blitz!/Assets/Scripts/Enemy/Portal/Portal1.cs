@@ -22,11 +22,17 @@ public class Portal1 : PortalTriggerGeneral
 	// Update is called once per frame
 	void Update () 
 	{
-		if (triggered && !GameObject.FindWithTag("PlayerMod1")) 
+		if (triggered && !GameObject.FindWithTag ("PlayerMod1")) 
 		{
 			EnemyActivator.gameObject.tag = "EnemyType1ON";
 			portalON.SetActive (false);
 			portalOFF.SetActive (true);
+		} 
+		else if (triggered && GameObject.FindWithTag ("PlayerMod1")) 
+		{
+			EnemyActivator.gameObject.tag = "Untagged";
+			portalOFF.SetActive (false);
+			portalON.SetActive (true);
 		}
 	}
 }

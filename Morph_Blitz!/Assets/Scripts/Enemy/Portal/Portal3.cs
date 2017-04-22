@@ -28,5 +28,11 @@ public class Portal3 : PortalTriggerGeneral
 			portalON.SetActive (false);
 			portalOFF.SetActive (true);
 		}
+		else if (triggered && GameObject.FindWithTag ("PlayerMod3")) 
+		{
+			EnemyActivator.gameObject.tag = "Untagged";
+			portalOFF.SetActive (false);
+			portalON.SetActive (true);
+		}
 	}
 }
