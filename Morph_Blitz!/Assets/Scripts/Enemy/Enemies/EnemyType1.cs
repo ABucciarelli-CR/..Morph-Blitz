@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyType1 : EnemyGlobal
 {
 	private Rigidbody _rb;
+	public float AdherenceModificator = 1;
+	public float MaxVelocityModificator = 1;
+	public float MaxAngleVelocityModificator = 1;
 
 	void Awake ()
 	{
