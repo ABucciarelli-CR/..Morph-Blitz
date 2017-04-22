@@ -10,9 +10,9 @@ public class Player_Controller : MonoBehaviour
 	[Header("Variable of 1st Form")]
 	[SerializeField] private float _MovePower = 9; // The force added to move
 	[SerializeField] private float _MaxVelocity = 100; // The max velocity the player can do
-	[SerializeField] private float _RotatePower = 9; // The force added to rotate
-	[SerializeField] private float _MaxAngularVelocity = 1; // The maximum velocity the player can rotate at.
-	[SerializeField] private float _PlayerAdherence = 2; // The Adherence of the player
+	[SerializeField] private float _RotatePower = 11.5f; // The force added to rotate
+	[SerializeField] private float _MaxAngularVelocity = 1.5f; // The maximum velocity the player can rotate at.
+	[SerializeField] private float _PlayerAdherence = 0; // The Adherence of the player
 
 	[Header("Variable of 2nd Form")]
 	//2nd form
@@ -26,9 +26,9 @@ public class Player_Controller : MonoBehaviour
 	//3rd form
 	[SerializeField] private float _RedMovePower = 3; // The force added to move in 3rd mode
 	[SerializeField] private float _RedMAXVelocity = 60; // The max velocity in 3rd mode
-	[SerializeField] private float _RedRotatePower = 11.5f; // The force added to rotate in 3rd mode
-	[SerializeField] private float _RedMAXAngularVelocity = 1.5f; // The maximum velocity the player can rotate at in 3rd mode
-	[SerializeField] private float _RedMAXAdherence = 0; // The max Adherence in 3rd mode
+	[SerializeField] private float _RedRotatePower = 9; // The force added to rotate in 3rd mode
+	[SerializeField] private float _RedMAXAngularVelocity = 1; // The maximum velocity the player can rotate at in 3rd mode
+	[SerializeField] private float _RedMAXAdherence = 2; // The max Adherence in 3rd mode
 
 	[Header("Other")]
 	private float _rotate = 0;//the rotation power of the player
