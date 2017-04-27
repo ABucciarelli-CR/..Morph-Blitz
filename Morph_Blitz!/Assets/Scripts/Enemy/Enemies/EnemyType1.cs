@@ -29,20 +29,23 @@ public class EnemyType1 : EnemyGlobal
 			if (!EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) 
 			{
 				transform.parent = null;
-				Rigidbody _rb = gameObject.AddComponent<Rigidbody> ();
-				_rb.mass = 1;
+				_rb = gameObject.AddComponent<Rigidbody> ();
+				_rb.mass = 0.1f;
 			}
 		}
 	}
 
 	void OnCollisionEnter (Collision other)
 	{
-		if (other.gameObject.name == "Body" && transform.parent == null)
+		if (other.gameObject.name != "EN1(Clone)") 
 		{
-			if (EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) 
+			if (other.gameObject.name == "Body" && transform.parent == null) 
 			{
-				transform.parent = Player.transform;
-				Destroy(_rb);
+				if (EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) 
+				{
+					transform.parent = Player.transform;
+					Destroy (_rb);
+				}
 			}
 		}
 	}
