@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class EnemyType3 : EnemyGlobal
 {
-	private Rigidbody _rb;
-
-	void Awake ()
-	{
-		//Enemy = GameObject.Find ("EN3");
-	}
 	// Use this for initialization
 	void Start () 
 	{
+		Player = GameObject.Find ("Catalizer");
 		_rb = GetComponent<Rigidbody> ();
-		Player = GameObject.Find ("Body");
 		EnemyActivator = GameObject.Find ("EnemySpawnController");
 	}
 
@@ -25,21 +19,21 @@ public class EnemyType3 : EnemyGlobal
 		{
 			if (!EnemyActivator.gameObject.CompareTag ("EnemyType3ON")) 
 			{
-				transform.parent = null;
-				Rigidbody _rb = gameObject.AddComponent<Rigidbody> ();
-				_rb.mass = 1;
+				_rb.isKinematic = false;
+				gameObject.layer = 9;
 			}
 		}
 	}
 
 	void OnCollisionEnter (Collision other)
 	{
-		if (other.gameObject.name == "Body" && transform.parent == null)
+		if (other.gameObject.name == "Body" && transform.parent == null) 
 		{
 			if (EnemyActivator.gameObject.CompareTag ("EnemyType3ON")) 
 			{
 				transform.parent = Player.transform;
-				Destroy(_rb);
+				_rb.isKinematic = true;
+				gameObject.layer = 11;
 			}
 		}
 	}

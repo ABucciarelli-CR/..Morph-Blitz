@@ -6,9 +6,7 @@ public abstract class EnemyGlobal : MonoBehaviour
 {
 	[HideInInspector]public GameObject EnemyActivator;//define the enemy activator
 	[HideInInspector]public GameObject Player;//define the player
-	[HideInInspector]public GameObject Enemy;//define the enemy
-
-	private Rigidbody _rb;
+	[HideInInspector]public Rigidbody _rb;//define rigidbody
 
 	void Awake ()
 	{
@@ -17,6 +15,6 @@ public abstract class EnemyGlobal : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-
+		_rb = GetComponent<Rigidbody> ();
 	}
 }

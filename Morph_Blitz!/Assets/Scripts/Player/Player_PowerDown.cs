@@ -7,12 +7,6 @@ public class Player_PowerDown : Player_Controller
 {
 
 	private int _childNum = 0;//counter of child
-	private int _initialChild = 4;//counter of initial child
-
-	[Header("Minimal Valor of Player's attribute")]
-	[SerializeField] private float _MinVelocity = 50;
-	[SerializeField] private float _MinAngularVelocity = .1f;
-	[SerializeField] private float _MinAdherence = 0;
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
@@ -33,19 +27,20 @@ public class Player_PowerDown : Player_Controller
 	[SerializeField] private float _RedDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
 	[SerializeField] private float _RedDepoweredAdherence = 0;//depower the edherence
 
+	public GameObject catalizer;
+
 
 	// Use this for initialization
 	void Start () 
 	{
-		
+		catalizer = GameObject.Find ("Catalizer");
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		//TODO : fare il danneggiamento dai nemici
-		_childNum = PrincipalBody.transform.childCount - _initialChild;
-
+		_childNum = catalizer.transform.childCount;
 
 	}
 }

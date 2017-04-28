@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class EnemyType1 : EnemyGlobal
 {
-	private Rigidbody _rb;
-	public float AdherenceModificator = 1;
-	public float MaxVelocityModificator = 1;
-	public float MaxAngleVelocityModificator = 1;
 
 	// Use this for initialization
 	void Start () 
@@ -26,11 +22,6 @@ public class EnemyType1 : EnemyGlobal
 			{
 				_rb.isKinematic = false;
 				gameObject.layer = 9;
-				/*
-				transform.parent = null;
-				_rb = gameObject.AddComponent<Rigidbody> ();
-				_rb.mass = 0.1f;
-				*/
 			}
 		}
 	}
@@ -44,7 +35,6 @@ public class EnemyType1 : EnemyGlobal
 				transform.parent = Player.transform;
 				_rb.isKinematic = true;
 				gameObject.layer = 11;
-				//Destroy (_rb);
 			}
 		}
 	}

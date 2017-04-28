@@ -6,7 +6,20 @@ public class Player_Controller : MonoBehaviour
 {
 	private Player_PowerDown _playerPowerDown;//create a reference to powerDownScript
 
+	public GameObject PrincipalBody;//define the principalBody
+	public GameObject EnemySpawn; //define the enemy controller
+
 	[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
+
+	[Header("Minimal Valor of Player's attribute")]
+	public float _MinVelocity = 50;
+	public float _MinAngularVelocity = .1f;
+	public float _MinAdherence = 0;
+
+	//player modificator with enemy attached
+	[HideInInspector]public float velocityModifier = 0;//the modifier of velocity with the enemy
+	[HideInInspector]public float angularVelocityModifier = 0;//the modifier of angular velocity with the enemy
+	[HideInInspector]public float adherenceModifier = 0;//the modifier of adherence with the enemy
 
 	//1st form
 	[Header("Variable of 1st Form")]
@@ -38,15 +51,7 @@ public class Player_Controller : MonoBehaviour
 	private float _maxVelocity = 0;//the max velocity of the player
 	private float _adherence = 0;//the adherence of the player
 
-	//player modificator with enemy attached
-	private float _velocityModifier = 0;//the modifier of velocity with the enemy
-	private float _angularVelocityModifier = 0;//the modifier of angular velocity with the enemy
-	private float _adherenceModifier = 0;//the modifier of adherence with the enemy
-
-	public GameObject PrincipalBody;//define the principalBody
-	public GameObject EnemySpawn; //define the enemy controller
-
-	public GameObject EN1;//define the enemy 1
+	//public GameObject EN1;//define the enemy 1
 	//public GameObject EN2;//define the enemy 2
 	//public GameObject EN3;//define the enemy 3
 
@@ -56,50 +61,18 @@ public class Player_Controller : MonoBehaviour
 	{
 		PrincipalBody = GameObject.Find ("Body");
 		EnemySpawn = GameObject.Find ("EnemySpawnController");
-		_Rigidbody = GetComponent<Rigidbody>();
+		_Rigidbody = GetComponent<Rigidbody> ();
 
-
+		/*
 		//ignore the collision with enemy
-		Physics.IgnoreCollision (EN1.GetComponent<Collider>(), GetComponent<Collider>());
+		Physics.IgnoreCollision (EN1.GetComponent<Collider>(), GetComponent<Collider>());*/
 	}
 
 	private void Update()
 	{
-		if (EnemySpawn.CompareTag ("EnemyType1ON")) 
-		{
-			_adherence = _PlayerAdherence;
-
-			_maxRotate = _MaxAngularVelocity;
-			_maxVelocity = _MaxVelocity;
-		} 
-		else if (EnemySpawn.CompareTag ("EnemyType2ON")) 
-		{
-			_adherence = _PlayerAdherence;
-
-			_maxRotate = _MaxAngularVelocity;
-			_maxVelocity = _MaxVelocity;
-		} 
-		else if (EnemySpawn.CompareTag ("EnemyType3ON")) 
-		{
-			_adherence = _PlayerAdherence;
-
-			_maxRotate = _MaxAngularVelocity;
-			_maxVelocity = _MaxVelocity;
-		} 
-		else 
-		{
-
-			_velocityModifier = 0;
-			_angularVelocityModifier = 0;
-			_adherenceModifier = 0;
-
-			_adherence = _PlayerAdherence;
-
-			_maxRotate = _MaxAngularVelocity;
-			_maxVelocity = _MaxVelocity;
-		}
-	}
 		
+	}
+
 	public void Move( float _move, float _rot)
 	{
 		//compare the tag for see what kind we have
