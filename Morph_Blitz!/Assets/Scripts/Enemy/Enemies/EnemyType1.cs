@@ -9,14 +9,10 @@ public class EnemyType1 : EnemyGlobal
 	public float MaxVelocityModificator = 1;
 	public float MaxAngleVelocityModificator = 1;
 
-	void Awake ()
-	{
-		//Enemy = GameObject.Find ("EN1");
-	}
 	// Use this for initialization
 	void Start () 
 	{
-		Player = GameObject.Find ("Body");
+		Player = GameObject.Find ("Catalizer");
 		_rb = GetComponent<Rigidbody> ();
 		EnemyActivator = GameObject.Find ("EnemySpawnController");
 	}
@@ -28,24 +24,27 @@ public class EnemyType1 : EnemyGlobal
 		{
 			if (!EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) 
 			{
+				_rb.isKinematic = false;
+				gameObject.layer = 9;
+				/*
 				transform.parent = null;
 				_rb = gameObject.AddComponent<Rigidbody> ();
 				_rb.mass = 0.1f;
+				*/
 			}
 		}
 	}
 
 	void OnCollisionEnter (Collision other)
 	{
-		if (other.gameObject.name != "EN1(Clone)") 
+		if (other.gameObject.name == "Body" && transform.parent == null) 
 		{
-			if (other.gameObject.name == "Body" && transform.parent == null) 
+			if (EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) 
 			{
-				if (EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) 
-				{
-					transform.parent = Player.transform;
-					Destroy (_rb);
-				}
+				transform.parent = Player.transform;
+				_rb.isKinematic = true;
+				gameObject.layer = 11;
+				//Destroy (_rb);
 			}
 		}
 	}

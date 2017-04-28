@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour 
 {
+	private Player_PowerDown _playerPowerDown;//create a reference to powerDownScript
 
 	[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
-
-	[Header("Minimal Valor of Player's attribute")]
-	[SerializeField] private float _MinVelocity = 50;
-	[SerializeField] private float _MinAngularVelocity = .1f;
-	[SerializeField] private float _MinAdherence = 0;
 
 	//1st form
 	[Header("Variable of 1st Form")]
@@ -36,26 +32,6 @@ public class Player_Controller : MonoBehaviour
 	[SerializeField] private float _RedMAXAngularVelocity = 1; // The maximum velocity the player can rotate at in 3rd mode
 	[SerializeField] private float _RedMAXAdherence = 2; // The max Adherence in 3rd mode
 
-	private int _childNum = 0;//counter of child
-	private int _initialChild = 4;//counter of initial child
-
-	[Header("Enemy Depotentation")]
-	//enemy type1 PowerDown modifier
-	[Header("Enemy Type1")]
-	[SerializeField] private float _BlueDepoweredMaxVelocity = 0; //depower the velocity
-	[SerializeField] private float _BlueDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
-	[SerializeField] private float _BlueDepoweredAdherence = 0;//depower the edherence
-
-	[Header("Enemy Type2")]
-	[SerializeField] private float _YellowDepoweredMaxVelocity = 0; //depower the velocity
-	[SerializeField] private float _YellowDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
-	[SerializeField] private float _YellowDepoweredAdherence = 0;//depower the edherence
-
-	[Header("Enemy Type3")]
-	[SerializeField] private float _RedDepoweredMaxVelocity = 0; //depower the velocity
-	[SerializeField] private float _RedDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
-	[SerializeField] private float _RedDepoweredAdherence = 0;//depower the edherence
-
 	private float _rotate = 0;//the rotation power of the player
 	private float _velocity = 0;//the velocity of the player
 	private float _maxRotate = 0;//the max rotation of the player
@@ -70,6 +46,10 @@ public class Player_Controller : MonoBehaviour
 	public GameObject PrincipalBody;//define the principalBody
 	public GameObject EnemySpawn; //define the enemy controller
 
+	public GameObject EN1;//define the enemy 1
+	//public GameObject EN2;//define the enemy 2
+	//public GameObject EN3;//define the enemy 3
+
 	private Rigidbody _Rigidbody;
 
 	private void Awake()
@@ -77,12 +57,14 @@ public class Player_Controller : MonoBehaviour
 		PrincipalBody = GameObject.Find ("Body");
 		EnemySpawn = GameObject.Find ("EnemySpawnController");
 		_Rigidbody = GetComponent<Rigidbody>();
+
+
+		//ignore the collision with enemy
+		Physics.IgnoreCollision (EN1.GetComponent<Collider>(), GetComponent<Collider>());
 	}
 
 	private void Update()
 	{
-		//TODO : fare il danneggiamento dai nemici
-		_childNum = PrincipalBody.transform.childCount - _initialChild;
 		if (EnemySpawn.CompareTag ("EnemyType1ON")) 
 		{
 			_adherence = _PlayerAdherence;
@@ -183,5 +165,6 @@ public class Player_Controller : MonoBehaviour
 		//player Adherence
 		_Rigidbody.AddRelativeForce (0, -_adherence, 0);
 	}
+
 }
 
