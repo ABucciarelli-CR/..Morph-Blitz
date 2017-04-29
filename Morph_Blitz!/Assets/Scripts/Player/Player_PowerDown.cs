@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //EnemyType1ON
-
+/*
 [RequireComponent(typeof (Player_Controller))]
 public class Player_PowerDown : Player_Controller 
 {
@@ -12,6 +12,7 @@ public class Player_PowerDown : Player_Controller
 	/// PrincipalBody <--- Body
 	/// EnemySpawn <--- EnemySpawnController
 /// </summary>
+	
 	[HideInInspector]public GameObject catalizer;//define the catalizer
 
 	private int _childNum = 0;//counter of child
@@ -40,11 +41,10 @@ public class Player_PowerDown : Player_Controller
 	{
 		catalizer = GameObject.Find ("Catalizer");
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
-		//TODO : fare il danneggiamento dai nemici
 		_childNum = catalizer.transform.childCount;
 	}
 
@@ -374,3 +374,4 @@ public class Player_PowerDown : Player_Controller
 
 	}
 }
+*/
