@@ -40,8 +40,8 @@ public class Player_Controller : MonoBehaviour
 	[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
 
 	[Header("Minimal Valor of Player's attribute")]
-	public float MinVelocity = 50;
-	public float MinAngularVelocity = .1f;
+	public float MinVelocity = 0;
+	public float MinAngularVelocity = 0;
 	public float MinAdherence = 0;
 
 	//player modificator with enemy attached
@@ -128,10 +128,12 @@ public class Player_Controller : MonoBehaviour
 
 				if ((MaxVelocity - (_childNum * _BlueDepoweredMaxVelocity)) > MinVelocity) 
 				{
+					Debug.Log ("boh5");
 					maxVelocity = MaxVelocity - (_childNum * _BlueDepoweredMaxVelocity);
 				}
 				else
 				{
+					Debug.Log ("boh6");
 					maxVelocity = MinVelocity;
 				}
 			}
