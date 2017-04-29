@@ -22,7 +22,7 @@ public class Player_Move : MonoBehaviour
 	}
 
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		// pass the input to the car
 		float h = Input.GetAxis ("Horizontal");

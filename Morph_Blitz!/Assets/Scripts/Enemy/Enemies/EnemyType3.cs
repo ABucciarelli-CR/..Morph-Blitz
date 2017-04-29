@@ -19,6 +19,7 @@ public class EnemyType3 : EnemyGlobal
 		{
 			if (!EnemyActivator.gameObject.CompareTag ("EnemyType3ON")) 
 			{
+				transform.parent = null;
 				_rb.isKinematic = false;
 				gameObject.layer = 9;
 			}
