@@ -9,7 +9,7 @@ public class Player_Controller : MonoBehaviour
 
 	private int _childNum = 0;//counter of child
 	[Header("Gravity")]
-	[SerializeField] private float _Gravity = 20;
+	[SerializeField] private float _Gravity = 10;
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
@@ -486,23 +486,26 @@ public class Player_Controller : MonoBehaviour
 		}
 
 		//Move Player
-		if (_move != 0) 
+		if (!isGrounded ()) 
 		{
-			_Rigidbody.AddRelativeForce (0, 0, _velocity);
-			if (_Rigidbody.velocity.magnitude > maxVelocity) 
+			if (_move != 0) 
 			{
-				_Rigidbody.velocity = _Rigidbody.velocity.normalized * maxVelocity;
+				_Rigidbody.AddRelativeForce (0, 0, _velocity);
+				if (_Rigidbody.velocity.magnitude > maxVelocity) 
+				{
+					_Rigidbody.velocity = _Rigidbody.velocity.normalized * maxVelocity;
+				} 
 			} 
-		} 
-		else if (!isGrounded ()) 
+			else 
+			{
+				_Rigidbody.velocity *= _SmoothPower;
+			}
+		}
+		else
 		{
+			Debug.Log ("Gianmarco");
 			_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
 		} 
-		else 
-		{
-			_Rigidbody.velocity *= _SmoothPower;
-		}
-			
 
 		//player Adherence
 		_Rigidbody.AddRelativeForce (0, -adherence, 0);
