@@ -9,7 +9,7 @@ public class Player_Controller : MonoBehaviour
 
 	private int _childNum = 0;//counter of child
 	[Header("Gravity")]
-	[SerializeField] private float _Gravity = 10;
+	[SerializeField] private float _Gravity = 30;
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
@@ -102,7 +102,7 @@ public class Player_Controller : MonoBehaviour
 
 	private bool isGrounded()
 	{
-		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f);
+		return Physics.Raycast (PrincipalBody.transform.position, -Vector3.up, distToGround + .1f);
 	}
 
 	public void Update()
@@ -486,8 +486,8 @@ public class Player_Controller : MonoBehaviour
 		}
 
 		//Move Player
-		if (!isGrounded ()) 
-		{
+		/*if (!isGrounded ()) 
+		{*/
 			if (_move != 0) 
 			{
 				_Rigidbody.AddRelativeForce (0, 0, _velocity);
@@ -500,12 +500,12 @@ public class Player_Controller : MonoBehaviour
 			{
 				_Rigidbody.velocity *= _SmoothPower;
 			}
-		}
+		/*}
 		else
 		{
-			Debug.Log ("Gianmarco");
+			Debug.Log ("Gianmarco");*/
 			_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
-		} 
+		//} 
 
 		//player Adherence
 		_Rigidbody.AddRelativeForce (0, -adherence, 0);
