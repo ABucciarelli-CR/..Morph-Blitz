@@ -8,6 +8,8 @@ public class Player_Controller : MonoBehaviour
 	[HideInInspector]public GameObject catalizer;//define the catalizer
 
 	private int _childNum = 0;//counter of child
+	[Header("Gravity")]
+	[SerializeField] private float _Gravity = 20;
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
@@ -29,14 +31,15 @@ public class Player_Controller : MonoBehaviour
 	[SerializeField] private float _RedDepoweredAdherence = 500000;//depower the edherence
 	/////////////////////////////////////////////////////////////////
 
-
-	//public Player_PowerDown _playerPowerDown;//create a reference to powerDownScript
-
+	[Header("Don't touch, it's MINE!")]
 	public GameObject PrincipalBody;//define the principalBody
 	public GameObject EnemySpawn; //define the enemy controller
 
 	private Rigidbody _Rigidbody;//define rigidbody
+	private Collider _col;//define the collider
+	private float distToGround;
 
+	[Header("Smooth Power, simply :D")]
 	[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
 
 	[Header("Minimal Valor of Player's attribute")]
@@ -85,17 +88,33 @@ public class Player_Controller : MonoBehaviour
 		PrincipalBody = GameObject.Find ("Body");
 		EnemySpawn = GameObject.Find ("EnemySpawnController");
 		_Rigidbody = GetComponent<Rigidbody> ();
+		_col = GetComponent<Collider> ();
 	}
 
 	private void Start()
 	{
+		//distance to ground
+		distToGround = _col.bounds.extents.y;
+
 		//playerPowerDown
 		catalizer = GameObject.Find ("Catalizer");
 	}
 
+	private bool isGrounded()
+	{
+		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f);
+	}
+
 	public void Update()
 	{
-		//playerPowerDown
+		///if player IsGrounded
+		/*
+		if (isGrounded ())
+		{
+			Debug.Log ("I'm GROUNDED!");
+		}*/
+
+		//playerPowerDown-----------------------------------------------------------------------------------------------------------------------
 		_childNum = catalizer.transform.childCount;
 
 		//if mod1 ON
@@ -474,11 +493,16 @@ public class Player_Controller : MonoBehaviour
 			{
 				_Rigidbody.velocity = _Rigidbody.velocity.normalized * maxVelocity;
 			} 
-		}
-		else
+		} 
+		else if (!isGrounded ()) 
+		{
+			_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
+		} 
+		else 
 		{
 			_Rigidbody.velocity *= _SmoothPower;
 		}
+			
 
 		//player Adherence
 		_Rigidbody.AddRelativeForce (0, -adherence, 0);
