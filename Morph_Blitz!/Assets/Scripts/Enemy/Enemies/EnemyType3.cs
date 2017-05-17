@@ -10,6 +10,7 @@ public class EnemyType3 : EnemyGlobal
 		Player = GameObject.Find ("Catalizer");
 		_rb = GetComponent<Rigidbody> ();
 		EnemyActivator = GameObject.Find ("EnemySpawnController");
+		_rb.useGravity = false;
 	}
 
 	// Update is called once per frame
@@ -28,6 +29,7 @@ public class EnemyType3 : EnemyGlobal
 
 	void OnCollisionEnter (Collision other)
 	{
+		_rb.useGravity = true;
 		if (other.gameObject.name == "Body" && transform.parent == null) 
 		{
 			if (EnemyActivator.gameObject.CompareTag ("EnemyType3ON")) 

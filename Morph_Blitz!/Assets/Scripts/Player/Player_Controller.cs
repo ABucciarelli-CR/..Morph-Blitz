@@ -39,8 +39,8 @@ public class Player_Controller : MonoBehaviour
 	private Collider _col;//define the collider
 	private float distToGround;
 
-	[Header("Smooth Power, simply :D")]
-	[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
+	//---------------------[Header("Smooth Power, simply :D")]
+	//---------------------[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
 
 	[Header("Minimal Valor of Player's attribute")]
 	public float MinVelocity = 0;
@@ -482,29 +482,27 @@ public class Player_Controller : MonoBehaviour
 		}
 		else
 		{
-			_Rigidbody.angularVelocity *= _SmoothPower;
+			//----------------------------------------------_Rigidbody.angularVelocity *= _SmoothPower;
 		}
 
 		//Move Player
-		/*if (!isGrounded ()) 
-		{*/
-			if (_move != 0) 
+		if (_move != 0) 
+		{
+			_Rigidbody.AddRelativeForce (0, 0, _velocity);
+			if (_Rigidbody.velocity.magnitude > maxVelocity) 
 			{
-				_Rigidbody.AddRelativeForce (0, 0, _velocity);
-				if (_Rigidbody.velocity.magnitude > maxVelocity) 
-				{
-					_Rigidbody.velocity = _Rigidbody.velocity.normalized * maxVelocity;
-				} 
+				_Rigidbody.velocity = _Rigidbody.velocity.normalized * maxVelocity;
 			} 
-			else 
-			{
-				_Rigidbody.velocity *= _SmoothPower;
-			}
+		} 
+		else 
+		{
+			//--------------------------------------------------------_Rigidbody.velocity *= _SmoothPower;
+		}
 		/*}
 		else
 		{
 			Debug.Log ("Gianmarco");*/
-			_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
+		_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
 		//} 
 
 		//player Adherence
