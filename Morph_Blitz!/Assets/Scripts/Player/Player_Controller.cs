@@ -54,27 +54,27 @@ public class Player_Controller : MonoBehaviour
 
 	//1st form
 	[Header("Variable of 1st Form")]
-	[SerializeField] private float _MovePower = 9; // The force added to move
-	[SerializeField] private float _RotatePower = 11.5f; // The force added to rotate
-	public float MaxVelocity = 100; // The max velocity the player can do
-	public float MaxAngularVelocity = 1.5f; // The maximum velocity the player can rotate at.
-	public float PlayerAdherence = 0; // The Adherence of the player
+	[SerializeField] private float _MovePower = 6; // The force added to move
+	[SerializeField] private float _RotatePower = 10f; // The force added to rotate
+	public float MaxVelocity = 30; // The max velocity the player can do
+	public float MaxAngularVelocity = 0.8f; // The maximum velocity the player can rotate at.
+	public float PlayerAdherence = 0.5f; // The Adherence of the player
 
 	[Header("Variable of 2nd Form")]
 	//2nd form
-	[SerializeField] private float _YellowMovePower = 15; // The force added to move in 2nd mode
+	[SerializeField] private float _YellowMovePower = 9; // The force added to move in 2nd mode
 	[SerializeField] private float _YellowRotatePower = .1f; // The force added to rotate in 2nd mode
-	public float YellowMAXVelocity = 150; // The max velocity in 2nd mode
+	public float YellowMAXVelocity = 55; // The max velocity in 2nd mode
 	public float YellowMaxAngularVelocity = .2f; // The maximum velocity the player can rotate at in 2nd mode
 	public float YellowMAXAdherence = 1; // The max Adherence in 2nd mode
 
 	[Header("Variable of 3rd Form")]
 	//3rd form
-	[SerializeField] private float _RedMovePower = 3; // The force added to move in 3rd mode
+	[SerializeField] private float _RedMovePower = 5; // The force added to move in 3rd mode
 	[SerializeField] private float _RedRotatePower = 9; // The force added to rotate in 3rd mode
-	public float RedMAXVelocity = 60; // The max velocity in 3rd mode
+	public float RedMAXVelocity = 20; // The max velocity in 3rd mode
 	public float RedMAXAngularVelocity = 1; // The maximum velocity the player can rotate at in 3rd mode
-	public float RedMAXAdherence = 2; // The max Adherence in 3rd mode
+	public float RedMAXAdherence = 2.5; // The max Adherence in 3rd mode
 
 
 	private float _rotate = 0;//the rotation power of the player

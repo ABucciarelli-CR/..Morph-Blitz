@@ -45,7 +45,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 54
+  controlID: 124
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 55
+  controlID: 79
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -254,13 +254,13 @@ MonoBehaviour:
     height: 444
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
   - {fileID: 12}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -324,19 +324,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts/Enemy/Enemies
+    - Assets/Scripts/Player
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Enemy/Enemies
+  - Assets/Scripts/Player
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Alessio Bucciarelli\Documents\..Morph-Blitz\Morph_Blitz!
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 119}
-    m_SelectedIDs: 96250000
-    m_LastClickedID: 9622
-    m_ExpandedIDs: 00000000de2400000025000036250000a02500000826000022280000242800002628000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 87}
+    m_SelectedIDs: a4250000
+    m_LastClickedID: 9636
+    m_ExpandedIDs: 00000000e02400000225000038250000a42500000c260000282800002a2800002c28000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -364,7 +364,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000de24000000250000a025000008260000222800002428000026280000
+    m_ExpandedIDs: 00000000e02400000225000038250000a42500000c260000282800002a2800002c280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -392,7 +392,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: fc24000010250000ae25000008250000c22500006e2500000a260000
+    m_ExpandedInstanceIDs: fc24000010250000ae25000008250000c22500006e2500000a26000006250000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -480,23 +480,23 @@ MonoBehaviour:
     height: 423
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 70060000
+    m_SelectedIDs: cc060000
     m_LastClickedID: 0
-    m_ExpandedIDs: f2ceffff64fbffff66fbffff94fbffffe4fbffff00000000
+    m_ExpandedIDs: e4fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: ProjectileSpawner
-      m_OriginalName: ProjectileSpawner
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: -1196
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 
@@ -537,9 +537,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1199.8396, y: 551.204, z: 176.01526}
+    m_Target: {x: -319.26065, y: -67.35193, z: 372.48682}
     speed: 2
-    m_Value: {x: -1199.8396, y: 551.204, z: 176.01526}
+    m_Value: {x: -319.26065, y: -67.35193, z: 372.48682}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -562,13 +562,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.10724707, y: 0.2848425, z: 0.032089297, w: -0.9520153}
+    m_Target: {x: -0.14181155, y: -0.084800094, z: 0.012195163, w: -0.9861794}
     speed: 2
-    m_Value: {x: 0.10724707, y: 0.2848425, z: 0.032089297, w: -0.9520153}
+    m_Value: {x: -0.14181155, y: -0.0848001, z: 0.012195163, w: -0.9861794}
   m_Size:
-    m_Target: 818.01196
+    m_Target: 1155.0914
     speed: 2
-    m_Value: 818.01196
+    m_Value: 1155.0914
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -625,7 +625,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoom: 0
     m_UniformScale: 1
     m_UpDirection: 1

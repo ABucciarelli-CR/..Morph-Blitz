@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class Portal1 : PortalTriggerGeneral 
 {
-	[HideInInspector]public GameObject portalON; //define Portal Active
-	[HideInInspector]public GameObject portalOFF; //define Portal Dectivate
+	public GameObject portalON; //define Portal Active
+	public GameObject portalOFF; //define Portal Dectivate
 
 	// Use this for initialization
 	void Start () 
 	{
 		EnemyActivator = GameObject.Find ("EnemySpawnController");
-
-		portalON = GameObject.Find ("Sphere1On");
-		portalOFF = GameObject.Find ("Sphere1Off");
 
 		portalON.SetActive (true);
 		portalOFF.SetActive (false);
