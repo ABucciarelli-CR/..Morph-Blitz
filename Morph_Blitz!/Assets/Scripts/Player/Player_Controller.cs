@@ -74,7 +74,7 @@ public class Player_Controller : MonoBehaviour
 	[SerializeField] private float _RedRotatePower = 9; // The force added to rotate in 3rd mode
 	public float RedMAXVelocity = 20; // The max velocity in 3rd mode
 	public float RedMAXAngularVelocity = 1; // The maximum velocity the player can rotate at in 3rd mode
-	public float RedMAXAdherence = 2.5; // The max Adherence in 3rd mode
+	public float RedMAXAdherence = 2.5f; // The max Adherence in 3rd mode
 
 
 	private float _rotate = 0;//the rotation power of the player
