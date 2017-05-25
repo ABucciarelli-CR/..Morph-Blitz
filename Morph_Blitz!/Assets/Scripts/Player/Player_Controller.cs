@@ -9,7 +9,7 @@ public class Player_Controller : MonoBehaviour
 
 	private int _childNum = 0;//counter of child
 	[Header("Gravity")]
-	[SerializeField] private float _Gravity = 30;
+	[SerializeField] private float _Gravity = 700;
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
@@ -87,12 +87,14 @@ public class Player_Controller : MonoBehaviour
 	{
 		PrincipalBody = GameObject.Find ("Body");
 		EnemySpawn = GameObject.Find ("EnemySpawnController");
-		_Rigidbody = GetComponent<Rigidbody> ();
-		_col = GetComponent<Collider> ();
 	}
 
 	private void Start()
 	{
+
+		_Rigidbody = PrincipalBody.GetComponent<Rigidbody> ();
+		_col = PrincipalBody.GetComponent<Collider> ();
+
 		//distance to ground
 		distToGround = _col.bounds.extents.y;
 
@@ -480,10 +482,6 @@ public class Player_Controller : MonoBehaviour
 				_Rigidbody.angularVelocity = _Rigidbody.angularVelocity.normalized * maxRotate;
 			} 
 		}
-		else
-		{
-			//----------------------------------------------_Rigidbody.angularVelocity *= _SmoothPower;
-		}
 
 		//Move Player
 		if (_move != 0) 
@@ -494,19 +492,16 @@ public class Player_Controller : MonoBehaviour
 				_Rigidbody.velocity = _Rigidbody.velocity.normalized * maxVelocity;
 			} 
 		} 
-		else 
-		{
-			//--------------------------------------------------------_Rigidbody.velocity *= _SmoothPower;
-		}
-		/*}
-		else
-		{
-			Debug.Log ("Gianmarco");*/
-		_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
-		//} 
 
 		//player Adherence
 		_Rigidbody.AddRelativeForce (0, -adherence, 0);
+	}
+
+	void OnCollisionExit(Collision col)
+	{
+		
+		_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
+		
 	}
 
 }
