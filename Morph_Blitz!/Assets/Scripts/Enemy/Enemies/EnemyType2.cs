@@ -25,6 +25,10 @@ public class EnemyType2 : EnemyGlobal
 				gameObject.layer = 9;
 			}
 		}
+		if (!EnemyActivator.gameObject.CompareTag ("EnemyType2ON"))
+		{
+			gameObject.SetActive (false);
+		}
 	}
 
 	void OnCollisionEnter (Collision other)

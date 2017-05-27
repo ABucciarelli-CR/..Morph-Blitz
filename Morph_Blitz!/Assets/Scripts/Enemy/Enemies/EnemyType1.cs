@@ -26,19 +26,24 @@ public class EnemyType1 : EnemyGlobal
 				gameObject.layer = 9;
 			}
 		}
+		if (!EnemyActivator.gameObject.CompareTag ("EnemyType1ON"))
+		{
+			gameObject.SetActive (false);
+		}
+
 	}
+		
 
 	void OnCollisionEnter (Collision other)
 	{
 		_rb.useGravity = true;
-		if (other.gameObject.name == "Body" && transform.parent == null) 
-		{
-			if (EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) 
-			{
+		if (other.gameObject.name == "Body" && transform.parent == null) {
+			if (EnemyActivator.gameObject.CompareTag ("EnemyType1ON")) {
 				transform.parent = Player.transform;
 				_rb.isKinematic = true;
 				gameObject.layer = 11;
-			}
-		}
+			} 
+		} 
+
 	}
 }
