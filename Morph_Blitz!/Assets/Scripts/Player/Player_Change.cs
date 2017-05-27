@@ -18,13 +18,17 @@ public class Player_Change : MonoBehaviour
 
 
 	// Use this for initialization
+	void awake()
+	{
+		//Body1 = GameObject.Find ("VisibleBody_1");
+		//Body2 = GameObject.Find ("VisibleBody_2");
+		//Body3 = GameObject.Find ("VisibleBody_3");
+	}
+
 	void Start () 
 	{
 
 		PrincipalBody = GameObject.Find ("Body");
-		Body1 = GameObject.Find ("VisibleBody_1");
-		Body2 = GameObject.Find ("VisibleBody_2");
-		Body3 = GameObject.Find ("VisibleBody_3");
 
 		PrincipalBody.gameObject.tag = "PlayerMod1";
 		Body1.SetActive (true);
