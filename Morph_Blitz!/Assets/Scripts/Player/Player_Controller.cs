@@ -2,44 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof (Player_Change))]
-
 public class Player_Controller : MonoBehaviour 
 {
 	/// player power down variables//////////////////////////////////
 	[HideInInspector]public GameObject catalizer;//define the catalizer
 
-	private RaycastHit _hit;
-
-	//private Collider _colType1;
-	//private Collider _colType2;
-	//private Collider _colType3;
-
-	//private Player_Change _plyerCng;//define the player_change script
-
 	private int _childNum = 0;//counter of child
-
 	[Header("Gravity")]
 	[SerializeField] private float _Gravity = 700;
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
 	[Header("Enemy Type1")]
-	[SerializeField] private float _BlueDepoweredMaxVelocity = 0; //depower the velocity
-	[SerializeField] private float _BlueDepoweredMaxAngularVelocity = 0.3f;//depower the angularvelocity
-	[SerializeField] private float _BlueDepoweredAdherence = 0;//depower the edherence
+	[SerializeField] private float _BlueDepoweredMaxVelocity = 500000; //depower the velocity
+	[SerializeField] private float _BlueDepoweredMaxAngularVelocity = 500000;//depower the angularvelocity
+	[SerializeField] private float _BlueDepoweredAdherence = 500000;//depower the edherence
 
 	[Header("Enemy Type2")]
 	//enemy type2 PowerDown modifier
-	[SerializeField] private float _YellowDepoweredMaxVelocity = 4; //depower the velocity
-	[SerializeField] private float _YellowDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
-	[SerializeField] private float _YellowDepoweredAdherence = 0;//depower the edherence
+	[SerializeField] private float _YellowDepoweredMaxVelocity = 500000; //depower the velocity
+	[SerializeField] private float _YellowDepoweredMaxAngularVelocity = 500000;//depower the angularvelocity
+	[SerializeField] private float _YellowDepoweredAdherence = 500000;//depower the edherence
 
 	[Header("Enemy Type3")]
 	//enemy type3 PowerDown modifier
-	[SerializeField] private float _RedDepoweredMaxVelocity = 3; //depower the velocity
-	[SerializeField] private float _RedDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
-	[SerializeField] private float _RedDepoweredAdherence = 0.5f;//depower the edherence
+	[SerializeField] private float _RedDepoweredMaxVelocity = 500000; //depower the velocity
+	[SerializeField] private float _RedDepoweredMaxAngularVelocity = 500000;//depower the angularvelocity
+	[SerializeField] private float _RedDepoweredAdherence = 500000;//depower the edherence
 	/////////////////////////////////////////////////////////////////
 
 	[Header("Don't touch, it's MINE!")]
@@ -48,7 +37,7 @@ public class Player_Controller : MonoBehaviour
 
 	private Rigidbody _Rigidbody;//define rigidbody
 	private Collider _col;//define the collider
-	private float maxDistToGround = 2f;
+	private float distToGround;
 
 	//---------------------[Header("Smooth Power, simply :D")]
 	//---------------------[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
@@ -66,26 +55,26 @@ public class Player_Controller : MonoBehaviour
 	//1st form
 	[Header("Variable of 1st Form")]
 	[SerializeField] private float _MovePower = 6; // The force added to move
-	[SerializeField] private float _RotatePower = 8f; // The force added to rotate
-	public float MaxVelocity = 22; // The max velocity the player can do
+	[SerializeField] private float _RotatePower = 10f; // The force added to rotate
+	public float MaxVelocity = 30; // The max velocity the player can do
 	public float MaxAngularVelocity = 0.8f; // The maximum velocity the player can rotate at.
-	public float PlayerAdherence = 1f; // The Adherence of the player
+	public float PlayerAdherence = 0.5f; // The Adherence of the player
 
 	[Header("Variable of 2nd Form")]
 	//2nd form
 	[SerializeField] private float _YellowMovePower = 9; // The force added to move in 2nd mode
 	[SerializeField] private float _YellowRotatePower = .1f; // The force added to rotate in 2nd mode
-	public float YellowMAXVelocity = 45; // The max velocity in 2nd mode
+	public float YellowMAXVelocity = 55; // The max velocity in 2nd mode
 	public float YellowMaxAngularVelocity = .2f; // The maximum velocity the player can rotate at in 2nd mode
 	public float YellowMAXAdherence = 1; // The max Adherence in 2nd mode
 
 	[Header("Variable of 3rd Form")]
 	//3rd form
 	[SerializeField] private float _RedMovePower = 5; // The force added to move in 3rd mode
-	[SerializeField] private float _RedRotatePower = 3; // The force added to rotate in 3rd mode
-	public float RedMAXVelocity = 15; // The max velocity in 3rd mode
+	[SerializeField] private float _RedRotatePower = 9; // The force added to rotate in 3rd mode
+	public float RedMAXVelocity = 20; // The max velocity in 3rd mode
 	public float RedMAXAngularVelocity = 1; // The maximum velocity the player can rotate at in 3rd mode
-	public float RedMAXAdherence = 2.8f; // The max Adherence in 3rd mode
+	public float RedMAXAdherence = 2.5f; // The max Adherence in 3rd mode
 
 
 	private float _rotate = 0;//the rotation power of the player
@@ -97,18 +86,17 @@ public class Player_Controller : MonoBehaviour
 	private void Awake()
 	{
 		PrincipalBody = GameObject.Find ("Body");
-
-		//_colType1 = _plyerCng.Body1.GetComponent<Collider> ();
-		//_colType2 = _plyerCng.Body2.GetComponent<Collider> ();
-		//_colType3 = _plyerCng.Body3.GetComponent<Collider> ();
-
 		EnemySpawn = GameObject.Find ("EnemySpawnController");
 	}
 
 	private void Start()
 	{
+
 		_Rigidbody = PrincipalBody.GetComponent<Rigidbody> ();
 		_col = PrincipalBody.GetComponent<Collider> ();
+
+		//distance to ground
+		distToGround = _col.bounds.extents.y;
 
 		//playerPowerDown
 		catalizer = GameObject.Find ("Catalizer");
@@ -116,51 +104,17 @@ public class Player_Controller : MonoBehaviour
 
 	private bool isGrounded()
 	{
-		Physics.Raycast (PrincipalBody.transform.position, PrincipalBody.transform.TransformDirection(Vector3.down), out _hit, Mathf.Infinity);
-		if ( _hit.distance >= maxDistToGround)
-		{
-			return false;
-		} 
-		else 
-		{
-			return true;
-		}
+		return Physics.Raycast (PrincipalBody.transform.position, -Vector3.up, distToGround + .1f);
 	}
-/*
-	private void ChangeCollider()
-	{
-		if(PrincipalBody.gameObject.CompareTag("PlayerMod1"))
-		{
-			_col = _colType1;
-		}
-
-		else if(PrincipalBody.gameObject.CompareTag("PlayerMod2"))
-		{
-			_col = _colType2;
-		}
-
-		else if(PrincipalBody.gameObject.CompareTag("PlayerMod3"))
-		{
-			_col = _colType3;
-		}
-	}*/
 
 	public void Update()
 	{
-		
-	}
-
-	public void FixedUpdate()
-	{
-		//ChangeCollider ();//change collider if player is changed
-		//DontTouchTerrain ();
 		///if player IsGrounded
-
-		if (!isGrounded ())
+		/*
+		if (isGrounded ())
 		{
-			//Debug.Log ("I'm GROUNDED!");
-			_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
-		}
+			Debug.Log ("I'm GROUNDED!");
+		}*/
 
 		//playerPowerDown-----------------------------------------------------------------------------------------------------------------------
 		_childNum = catalizer.transform.childCount;
@@ -270,7 +224,7 @@ public class Player_Controller : MonoBehaviour
 			//if AllEnemyOFF
 			else
 			{
-				//Debug.Log ("'Ncul!");
+				Debug.Log ("'Ncul!");
 
 				adherence = PlayerAdherence;
 				maxRotate = MaxAngularVelocity;
@@ -543,15 +497,12 @@ public class Player_Controller : MonoBehaviour
 		_Rigidbody.AddRelativeForce (0, -adherence, 0);
 	}
 
-
-
-	/*
 	void OnCollisionExit(Collision col)
 	{
 		
 		_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
 		
-	}*/
+	}
 
 }
 

@@ -8,7 +8,7 @@ public class ProjectileSpawner : MonoBehaviour {
 	public GameObject spawnPoint;
 	public GameObject EnemySpawn; //define the enemy controller
 
-	public float spawnTime = 3f;
+	public float spawnTime = 1f;
 
 	private GameObject _EN;
 	private float _comparedTime = 3f;
