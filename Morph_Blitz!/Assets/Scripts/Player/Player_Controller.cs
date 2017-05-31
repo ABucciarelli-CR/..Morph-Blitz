@@ -11,6 +11,10 @@ public class Player_Controller : MonoBehaviour
 
 	private RaycastHit _hit;
 
+	private bool _addExtraGravity;//if player don't collide add it
+
+	private bool _distanceToGround;// the distance to the ground
+
 	//private Collider _colType1;
 	//private Collider _colType2;
 	//private Collider _colType3;
@@ -20,7 +24,7 @@ public class Player_Controller : MonoBehaviour
 	private int _childNum = 0;//counter of child
 
 	[Header("Gravity")]
-	[SerializeField] private float _Gravity = 700;
+	[SerializeField] private float _Gravity = 60;
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
@@ -48,7 +52,7 @@ public class Player_Controller : MonoBehaviour
 
 	private Rigidbody _Rigidbody;//define rigidbody
 	private Collider _col;//define the collider
-	private float maxDistToGround = 2f;
+	private float maxDistToGround = 5f;
 
 	//---------------------[Header("Smooth Power, simply :D")]
 	//---------------------[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
@@ -113,19 +117,17 @@ public class Player_Controller : MonoBehaviour
 		//playerPowerDown
 		catalizer = GameObject.Find ("Catalizer");
 	}
-
+	/*
 	private bool isGrounded()
 	{
-		Physics.Raycast (PrincipalBody.transform.position, PrincipalBody.transform.TransformDirection(Vector3.down), out _hit, Mathf.Infinity);
-		if ( _hit.distance >= maxDistToGround)
+
+		Physics.Raycast (PrincipalBody.transform.position, PrincipalBody.transform.TransformDirection(Vector3.down), out _hit, maxDistToGround);
+		if (_hit.transform.com) 
 		{
-			return false;
-		} 
-		else 
-		{
-			return true;
+
 		}
-	}
+		return _distanceToGround;
+	}*/
 /*
 	private void ChangeCollider()
 	{
@@ -155,10 +157,15 @@ public class Player_Controller : MonoBehaviour
 		//ChangeCollider ();//change collider if player is changed
 		//DontTouchTerrain ();
 		///if player IsGrounded
-
-		if (!isGrounded ())
+		/*
+		if (isGrounded ())
 		{
-			//Debug.Log ("I'm GROUNDED!");
+			Debug.Log ("Tua madre sollevata");
+			_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
+		}*/
+
+		if(_addExtraGravity)
+		{
 			_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
 		}
 
@@ -498,7 +505,6 @@ public class Player_Controller : MonoBehaviour
 
 	public void Move( float _move, float _rot)
 	{
-		
 		//compare the tag for see what kind we have
 		if(PrincipalBody.gameObject.CompareTag("PlayerMod1"))
 		{
@@ -521,6 +527,7 @@ public class Player_Controller : MonoBehaviour
 		//Rotate player
 		if (_rot != 0) 
 		{
+			Debug.Log ("La mamma puttana che si ruota");
 			_Rigidbody.AddRelativeTorque(0, _rotate, 0);
 			if (_Rigidbody.angularVelocity.magnitude > maxRotate) 
 			{
@@ -531,6 +538,7 @@ public class Player_Controller : MonoBehaviour
 		//Move Player
 		if (_move != 0) 
 		{
+			Debug.Log ("La mamma puttana che si muove");
 			_Rigidbody.AddRelativeForce (0, 0, _velocity);
 			if (_Rigidbody.velocity.magnitude > maxVelocity) 
 			{
@@ -543,14 +551,18 @@ public class Player_Controller : MonoBehaviour
 	}
 
 
-
-	/*
-	void OnCollisionExit(Collision col)
+	public void OnCollisionExit()
 	{
+		Debug.Log ("Tua madre sollevata");
+		_addExtraGravity = true;
+		//_Rigidbody.AddForce (0, -_Gravity, 0);
+	}
+	public void OnCollisionStay()
+	{
+		Debug.Log ("Tua madre atterrata");
+		_addExtraGravity = false;
+		//_Rigidbody.AddForce (0, -_Gravity, 0);
+	}
 		
-		_Rigidbody.AddRelativeForce (0, -_Gravity, 0);
-		
-	}*/
-
 }
 
