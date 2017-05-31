@@ -7,10 +7,12 @@ public class ProjectileSpawner : MonoBehaviour {
 	public GameObject enemyPrefab;
 	public GameObject spawnPoint;
 	public GameObject EnemySpawn; //define the enemy controller
+	public float ShootingRange = 20f;
 
 	public float spawnTime = 3f;
 
-	private GameObject _EN;
+	public RaycastHit _hit;
+	public GameObject _EN;
 	private float _comparedTime = 3f;
 	[SerializeField]private float _shootPower = 50f;
 
@@ -21,18 +23,42 @@ public class ProjectileSpawner : MonoBehaviour {
 
 	void Update () 
 	{
-
-		if (gameObject.CompareTag ("TowerType1") && EnemySpawn.CompareTag ("EnemyType1ON") || gameObject.CompareTag ("TowerType2") && EnemySpawn.CompareTag ("EnemyType2ON") || gameObject.CompareTag ("TowerType3") && EnemySpawn.CompareTag ("EnemyType3ON")) 
+		if (Shoot ()) 
 		{
-			//Debug.Log ("Christiana Capotondi");
-			if (_comparedTime <= 0) 
+			if (gameObject.CompareTag ("TowerType1") && EnemySpawn.CompareTag ("EnemyType1ON") || gameObject.CompareTag ("TowerType2") && EnemySpawn.CompareTag ("EnemyType2ON") || gameObject.CompareTag ("TowerType3") && EnemySpawn.CompareTag ("EnemyType3ON")) 
 			{
-				_EN = Instantiate (enemyPrefab, spawnPoint.transform.position, Quaternion.identity);
-				_EN.GetComponent<Rigidbody> ().AddRelativeForce (transform.forward * _shootPower);
-				_comparedTime = spawnTime;
+				//Debug.Log ("Christiana Capotondi");
+				if (_comparedTime <= 0) 
+				{
+					_EN = Instantiate (enemyPrefab, spawnPoint.transform.position, Quaternion.identity);
+					_EN.GetComponent<Rigidbody> ().AddRelativeForce (transform.forward * _shootPower);
+					_comparedTime = spawnTime;
+				}
+				_comparedTime -= Time.deltaTime;
 			}
-			_comparedTime -= Time.deltaTime;
+		}
+			
+
+
+	
+	}
+
+	public bool Shoot ()
+	{
+		Physics.Raycast(spawnPoint.transform.position, spawnPoint.transform.TransformDirection(Vector3.forward), out _hit, ShootingRange );
+		Debug.DrawLine (spawnPoint.transform.position, _hit.point);
+
+		//Debug.Log (_hit.collider.gameObject.name);
+
+		if (_hit.collider.gameObject.name == "Body")
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
 		}
 	}
+
 
 }
