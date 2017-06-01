@@ -45,12 +45,12 @@ public class ProjectileSpawner : MonoBehaviour {
 
 	public bool Shoot ()
 	{
-		Physics.Raycast(spawnPoint.transform.position, spawnPoint.transform.TransformDirection(Vector3.forward), out _hit, ShootingRange );
+		Physics.Raycast(spawnPoint.transform.position, spawnPoint.transform.TransformDirection(Vector3.forward), out _hit, Mathf.Infinity);
 		Debug.DrawLine (spawnPoint.transform.position, _hit.point);
 
 		//Debug.Log (_hit.collider.gameObject.name);
 
-		if (_hit.collider.gameObject.name == "Body")
+		if (_hit.collider.name == "Body" && _hit.distance <= ShootingRange)
 		{
 			return true;
 		}
