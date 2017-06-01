@@ -7,6 +7,7 @@ public class Portal3 : PortalTriggerGeneral
 	public GameObject portalON; //define Portal Active
 	public GameObject portalOFF; //define Portal Dectivate
 
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -22,6 +23,7 @@ public class Portal3 : PortalTriggerGeneral
 		if (triggered && !GameObject.FindWithTag("PlayerMod3")) 
 		{
 			EnemyActivator.gameObject.tag = "EnemyType3ON";
+			gameObject.SetActive (false);
 			portalON.SetActive (false);
 			portalOFF.SetActive (true);
 		}

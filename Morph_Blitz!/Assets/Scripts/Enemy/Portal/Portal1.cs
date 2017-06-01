@@ -22,6 +22,7 @@ public class Portal1 : PortalTriggerGeneral
 		if (triggered && !GameObject.FindWithTag ("PlayerMod1")) 
 		{
 			EnemyActivator.gameObject.tag = "EnemyType1ON";
+			gameObject.SetActive (false);
 			portalON.SetActive (false);
 			portalOFF.SetActive (true);
 		} 
