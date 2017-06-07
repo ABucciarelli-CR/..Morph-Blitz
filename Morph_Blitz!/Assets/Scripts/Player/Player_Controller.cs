@@ -33,7 +33,7 @@ public class Player_Controller : MonoBehaviour
 	private float _smoothMaxVelocity = 0f;// the smoother of MAXVelocity
 
 	[Header("Smooth the deceleration, simply :D")]
-	[SerializeField] private float _DecelerationSmooth = 100f; // The power of the acceleration smooth
+	[SerializeField] private float _DecelerationSmooth = 1f; // The power of the acceleration smooth
 
 	[Header("Gravity")]
 	[SerializeField] private float _Gravity = 60;
@@ -79,8 +79,8 @@ public class Player_Controller : MonoBehaviour
 	[Header("Variable of 2nd Form")]
 	//2nd form
 	[SerializeField] private float _YellowMovePower = 9; // The force added to move in 2nd mode
-	[SerializeField] private float _YellowRotatePower = .1f; // The force added to rotate in 2nd mode
-	public float YellowMAXVelocity = 45; // The max velocity in 2nd mode
+	[SerializeField] private float _YellowRotatePower = 4f; // The force added to rotate in 2nd mode
+	public float YellowMAXVelocity = 40; // The max velocity in 2nd mode
 	public float YellowMaxAngularVelocity = .2f; // The maximum velocity the player can rotate at in 2nd mode
 	public float YellowMAXAdherence = 1; // The max Adherence in 2nd mode
 
@@ -371,8 +371,8 @@ public class Player_Controller : MonoBehaviour
 
 		if (IsMoreSlowThanBefore (maxVel)) 
 		{
-			//Debug.Log (_smoothMaxVelocity);
-			_smoothMaxVelocity -= (_DecelerationSmooth * (Time.deltaTime * 10));
+			Debug.Log (_smoothMaxVelocity);
+			_smoothMaxVelocity -= _DecelerationSmooth * (Time.deltaTime * 10);
 		} 
 		return _smoothMaxVelocity;
 	}
@@ -382,12 +382,12 @@ public class Player_Controller : MonoBehaviour
 		// check if the maxVel of the player is minor than before
 		if (_smoothMaxVelocity >= maxVel)
 		{
-			//Debug.Log (_smoothMaxVelocity + " true");
+			Debug.Log (_smoothMaxVelocity + " true");
 			return true;
 		}
 		else 
 		{
-			//Debug.Log (_smoothMaxVelocity + " false");
+			Debug.Log (_smoothMaxVelocity + " false");
 			_smoothMaxVelocity = maxVel;
 			return false;
 		}
