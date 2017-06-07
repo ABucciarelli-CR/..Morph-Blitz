@@ -9,11 +9,18 @@ public class Player_Controller : MonoBehaviour
 	/// player power down variables//////////////////////////////////
 	[HideInInspector]public GameObject catalizer;//define the catalizer
 
-	private RaycastHit _hit;
+	[Header("Don't touch, it's MINE!")]
+	public GameObject PrincipalBody;//define the principalBody
+	public GameObject EnemySpawn; //define the enemy controller
+
+	private Rigidbody _Rigidbody;//define rigidbody
+	private Collider _col;//define the collider
+	private float maxDistToGround = 5f;
 
 	private bool _addExtraGravity;//if player don't collide add it
 
 	private bool _distanceToGround;// the distance to the ground
+
 
 	//private Collider _colType1;
 	//private Collider _colType2;
@@ -22,6 +29,11 @@ public class Player_Controller : MonoBehaviour
 	//private Player_Change _plyerCng;//define the player_change script
 
 	private int _childNum = 0;//counter of child
+
+	private float _smoothMaxVelocity = 0f;// the smoother of MAXVelocity
+
+	[Header("Smooth the deceleration, simply :D")]
+	[SerializeField] private float _DecelerationSmooth = 100f; // The power of the acceleration smooth
 
 	[Header("Gravity")]
 	[SerializeField] private float _Gravity = 60;
@@ -45,17 +57,6 @@ public class Player_Controller : MonoBehaviour
 	[SerializeField] private float _RedDepoweredMaxAngularVelocity = 0;//depower the angularvelocity
 	[SerializeField] private float _RedDepoweredAdherence = 0.5f;//depower the edherence
 	/////////////////////////////////////////////////////////////////
-
-	[Header("Don't touch, it's MINE!")]
-	public GameObject PrincipalBody;//define the principalBody
-	public GameObject EnemySpawn; //define the enemy controller
-
-	private Rigidbody _Rigidbody;//define rigidbody
-	private Collider _col;//define the collider
-	private float maxDistToGround = 5f;
-
-	//---------------------[Header("Smooth Power, simply :D")]
-	//---------------------[SerializeField] private float _SmoothPower = 0.97f; // The power of smooth
 
 	[Header("Minimal Valor of Player's attribute")]
 	public float MinVelocity = 0;
@@ -149,7 +150,7 @@ public class Player_Controller : MonoBehaviour
 
 	public void Update()
 	{
-		
+
 	}
 
 	public void FixedUpdate()
@@ -178,100 +179,19 @@ public class Player_Controller : MonoBehaviour
 			//if ENEMYTYPE1ON
 			if (EnemySpawn.gameObject.CompareTag ("EnemyType1ON")) 
 			{
-				if ((PlayerAdherence - (_childNum * _BlueDepoweredAdherence)) > MinAdherence) 
-				{
-					//Debug.Log ("boh1");
-					adherence = PlayerAdherence - (_childNum * _BlueDepoweredAdherence);
-				}
-				else
-				{
-					//Debug.Log ("boh2");
-					adherence = MinAdherence;
-				}
-
-				if ((MaxAngularVelocity - (_childNum * _BlueDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					//Debug.Log ("boh3");
-					maxRotate = MaxAngularVelocity - (_childNum * _BlueDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					//Debug.Log ("boh4");
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((MaxVelocity - (_childNum * _BlueDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					//Debug.Log ("boh5");
-					maxVelocity = MaxVelocity - (_childNum * _BlueDepoweredMaxVelocity);
-				}
-				else
-				{
-					//Debug.Log ("boh6");
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (PlayerAdherence, MaxAngularVelocity, MaxVelocity, _BlueDepoweredAdherence, _BlueDepoweredMaxAngularVelocity, _BlueDepoweredMaxVelocity);
 			}
 
 			//if ENEMYTYPE2ON
 			else if (EnemySpawn.gameObject.CompareTag ("EnemyType2ON")) 
 			{
-				if ((PlayerAdherence - (_childNum * _YellowDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = PlayerAdherence - (_childNum * _YellowDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((MaxAngularVelocity - (_childNum * _YellowDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = MaxAngularVelocity - (_childNum * _YellowDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((MaxVelocity - (_childNum * _YellowDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = MaxVelocity - (_childNum * _YellowDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (PlayerAdherence, MaxAngularVelocity, MaxVelocity, _YellowDepoweredAdherence, _YellowDepoweredMaxAngularVelocity, _YellowDepoweredMaxVelocity);
 			}
 
 			//if ENEMYTYPE3ON
 			else if (EnemySpawn.gameObject.CompareTag ("EnemyType3ON")) 
 			{
-				if ((PlayerAdherence - (_childNum * _RedDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = PlayerAdherence - (_childNum * _RedDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((MaxAngularVelocity - (_childNum * _RedDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = MaxAngularVelocity - (_childNum * _RedDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((MaxVelocity - (_childNum * _RedDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = MaxVelocity - (_childNum * _RedDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (PlayerAdherence, MaxAngularVelocity, MaxVelocity, _RedDepoweredAdherence, _RedDepoweredMaxAngularVelocity, _RedDepoweredMaxVelocity);
 			}
 				
 			//if AllEnemyOFF
@@ -279,9 +199,11 @@ public class Player_Controller : MonoBehaviour
 			{
 				//Debug.Log ("'Ncul!");
 
+				Depowerator (PlayerAdherence, MaxAngularVelocity, MaxVelocity, 0, 0, 0);
+				/*
 				adherence = PlayerAdherence;
 				maxRotate = MaxAngularVelocity;
-				maxVelocity = MaxVelocity;
+				maxVelocity = MaxVelocity;*/
 			}
 
 			//end playermod1Modifier
@@ -293,102 +215,29 @@ public class Player_Controller : MonoBehaviour
 			//if ENEMYTYPE1ON
 			if (EnemySpawn.gameObject.CompareTag ("EnemyType1ON")) 
 			{
-				if ((YellowMAXAdherence - (_childNum * _BlueDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = YellowMAXAdherence - (_childNum * _BlueDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((YellowMaxAngularVelocity - (_childNum * _BlueDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = YellowMaxAngularVelocity - (_childNum * _BlueDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((YellowMAXVelocity - (_childNum * _BlueDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = YellowMAXVelocity - (_childNum * _BlueDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (YellowMAXAdherence, YellowMaxAngularVelocity, YellowMAXVelocity, _BlueDepoweredAdherence, _BlueDepoweredMaxAngularVelocity, _BlueDepoweredMaxVelocity);
 			}
 
 			//if ENEMYTYPE2ON
 			else if (EnemySpawn.gameObject.CompareTag ("EnemyType2ON")) 
 			{
-				if ((YellowMAXAdherence - (_childNum * _YellowDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = YellowMAXAdherence - (_childNum * _YellowDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((YellowMaxAngularVelocity - (_childNum * _YellowDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = YellowMaxAngularVelocity - (_childNum * _YellowDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((YellowMAXVelocity - (_childNum * _YellowDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = YellowMAXVelocity - (_childNum * _YellowDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (YellowMAXAdherence, YellowMaxAngularVelocity, YellowMAXVelocity, _YellowDepoweredAdherence, _YellowDepoweredMaxAngularVelocity, _YellowDepoweredMaxVelocity);
 			}
 
 			//if ENEMYTYPE3ON
 			else if (EnemySpawn.gameObject.CompareTag ("EnemyType3ON")) 
 			{
-				if ((YellowMAXAdherence - (_childNum * _RedDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = YellowMAXAdherence - (_childNum * _RedDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((YellowMaxAngularVelocity - (_childNum * _RedDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = YellowMaxAngularVelocity - (_childNum * _RedDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((YellowMAXVelocity - (_childNum * _RedDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = YellowMAXVelocity - (_childNum * _RedDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (YellowMAXAdherence, YellowMaxAngularVelocity, YellowMAXVelocity, _RedDepoweredAdherence, _RedDepoweredMaxAngularVelocity, _RedDepoweredMaxVelocity);
 			}
 
 			//if AllEnemyOFF
 			else
 			{
+				Depowerator (YellowMAXAdherence, YellowMaxAngularVelocity, YellowMAXVelocity, 0, 0, 0);
+				/*
 				adherence = YellowMAXAdherence;
 				maxRotate = YellowMaxAngularVelocity;
-				maxVelocity = YellowMAXVelocity;
+				maxVelocity = YellowMAXVelocity;*/
 			}
 
 			//end playermod2Modifier
@@ -400,102 +249,29 @@ public class Player_Controller : MonoBehaviour
 			//if ENEMYTYPE1ON
 			if (EnemySpawn.gameObject.CompareTag ("EnemyType1ON")) 
 			{
-				if ((RedMAXAdherence - (_childNum * _BlueDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = RedMAXAdherence - (_childNum * _BlueDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((RedMAXAngularVelocity - (_childNum * _BlueDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = RedMAXAngularVelocity - (_childNum * _BlueDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((RedMAXVelocity - (_childNum * _BlueDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = RedMAXVelocity - (_childNum * _BlueDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (RedMAXAdherence, RedMAXAngularVelocity, RedMAXVelocity, _BlueDepoweredAdherence, _BlueDepoweredMaxAngularVelocity, _BlueDepoweredMaxVelocity);
 			}
 
 			//if ENEMYTYPE2ON
 			else if (EnemySpawn.gameObject.CompareTag ("EnemyType2ON")) 
 			{
-				if ((RedMAXAdherence - (_childNum * _YellowDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = RedMAXAdherence - (_childNum * _YellowDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((RedMAXAngularVelocity - (_childNum * _YellowDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = RedMAXAngularVelocity - (_childNum * _YellowDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((RedMAXVelocity - (_childNum * _YellowDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = RedMAXVelocity - (_childNum * _YellowDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (RedMAXAdherence, RedMAXAngularVelocity, RedMAXVelocity, _YellowDepoweredAdherence, _YellowDepoweredMaxAngularVelocity, _YellowDepoweredMaxVelocity);
 			}
 
 			//if ENEMYTYPE3ON
 			else if (EnemySpawn.gameObject.CompareTag ("EnemyType3ON")) 
 			{
-				if ((RedMAXAdherence - (_childNum * _RedDepoweredAdherence)) > MinAdherence) 
-				{
-					adherence = RedMAXAdherence - (_childNum * _RedDepoweredAdherence);
-				}
-				else
-				{
-					adherence = MinAdherence;
-				}
-
-				if ((RedMAXAngularVelocity - (_childNum * _RedDepoweredMaxAngularVelocity)) > MinAngularVelocity) 
-				{
-					maxRotate = RedMAXAngularVelocity - (_childNum * _RedDepoweredMaxAngularVelocity);
-				}
-				else
-				{
-					maxRotate = MinAngularVelocity;
-				}
-
-				if ((RedMAXVelocity - (_childNum * _RedDepoweredMaxVelocity)) > MinVelocity) 
-				{
-					maxVelocity = RedMAXVelocity - (_childNum * _RedDepoweredMaxVelocity);
-				}
-				else
-				{
-					maxVelocity = MinVelocity;
-				}
+				Depowerator (RedMAXAdherence, RedMAXAngularVelocity, RedMAXVelocity, _RedDepoweredAdherence, _RedDepoweredMaxAngularVelocity, _RedDepoweredMaxVelocity);
 			}
 
 			//if AllEnemyOFF
 			else
 			{
+				Depowerator (RedMAXAdherence, RedMAXAngularVelocity, RedMAXVelocity, 0, 0, 0);
+				/*
 				adherence = RedMAXAdherence;
 				maxRotate = RedMAXAngularVelocity;
-				maxVelocity = RedMAXVelocity;
+				maxVelocity = RedMAXVelocity;*/
 			}
 
 			//end playermod2Modifier
@@ -514,7 +290,7 @@ public class Player_Controller : MonoBehaviour
 		else if(PrincipalBody.gameObject.CompareTag("PlayerMod2"))
 		{
 
-			_rotate = _rot * (_YellowRotatePower * 5);
+			_rotate = _rot * (_YellowRotatePower * 10);
 			_velocity = _move * (_YellowMovePower * 10);
 		}
 		else if(PrincipalBody.gameObject.CompareTag("PlayerMod3"))
@@ -538,6 +314,13 @@ public class Player_Controller : MonoBehaviour
 		//Move Player
 		if (_move != 0) 
 		{
+			/*
+			Debug.Log ("First of IsMoreSlowThanBefore");
+			if(IsMoreSlowThanBefore(_velocity))
+			{
+				Debug.Log ("In IsMoreSlowThanBefore");
+				VelocitySmoother (_velocity);
+			}*/
 			Debug.Log ("La mamma puttana che si muove");
 			_Rigidbody.AddRelativeForce (0, 0, _velocity);
 			if (_Rigidbody.velocity.magnitude > maxVelocity) 
@@ -550,6 +333,66 @@ public class Player_Controller : MonoBehaviour
 		_Rigidbody.AddRelativeForce (0, -adherence, 0);
 	}
 
+	//do the power-down of the player
+	public void Depowerator(float plyrAdherence, float plyrAngularVelocity,float plyrVelocity, float depAdherence, float depAngularVelocity, float depVelocity)
+	{
+		Debug.Log ("My vel = " + plyrVelocity);
+		if ((plyrAdherence - (_childNum * depAdherence)) > MinAdherence) 
+		{
+			adherence = plyrAdherence - (_childNum * depAdherence);
+		}
+		else
+		{
+			adherence = MinAdherence;
+		}
+
+		if ((plyrAngularVelocity - (_childNum * depAngularVelocity)) > MinAngularVelocity) 
+		{
+			maxRotate = plyrAngularVelocity - (_childNum * depAngularVelocity);
+		}
+		else
+		{
+			maxRotate = MinAngularVelocity;
+		}
+
+		if ((VelocitySmoother(plyrVelocity) - (_childNum * depVelocity)) > MinVelocity) 
+		{
+			maxVelocity = VelocitySmoother(plyrVelocity) - (_childNum * depVelocity);
+		}
+		else
+		{
+			maxVelocity = MinVelocity;
+		}
+	}
+
+	public float VelocitySmoother(float maxVel)
+	{
+		//float _supp_smoothMaxVelocity; //support variable to _smoothMaxVelocity
+
+		if (IsMoreSlowThanBefore (maxVel)) 
+		{
+			//Debug.Log (_smoothMaxVelocity);
+			_smoothMaxVelocity -= (_DecelerationSmooth * (Time.deltaTime * 10));
+		} 
+		return _smoothMaxVelocity;
+	}
+
+	public bool IsMoreSlowThanBefore(float maxVel)
+	{
+		// check if the maxVel of the player is minor than before
+		if (_smoothMaxVelocity >= maxVel)
+		{
+			//Debug.Log (_smoothMaxVelocity + " true");
+			return true;
+		}
+		else 
+		{
+			//Debug.Log (_smoothMaxVelocity + " false");
+			_smoothMaxVelocity = maxVel;
+			return false;
+		}
+	}
+
 
 	public void OnCollisionExit()
 	{
@@ -557,6 +400,7 @@ public class Player_Controller : MonoBehaviour
 		_addExtraGravity = true;
 		//_Rigidbody.AddForce (0, -_Gravity, 0);
 	}
+
 	public void OnCollisionStay()
 	{
 		Debug.Log ("Tua madre atterrata");
