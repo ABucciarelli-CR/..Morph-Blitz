@@ -2,73 +2,93 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class MusicManager : MonoBehaviour 
+namespace Musica
 {
-	public AudioClip BG_Menu;
-	public AudioClip BG_Tutorial;
-	public AudioClip BG_Lv1;
-	public AudioClip BG_Lv2;
-
-	private AudioClip[] _MusicList;
-
-	private AudioSource _MusicPlayer;
-
-	private int _musicPlayed;//to check while music we have active
-
-	void Awake()
+	public class MusicManager : MonoBehaviour 
 	{
-		DontDestroyOnLoad (gameObject);
-		_MusicList = new AudioClip[] 
+		public AudioClip BG_Menu;
+		public AudioClip BG_Tutorial;
+		public AudioClip BG_Lv1;
+		public AudioClip BG_Lv2;
+
+		public Slider AudioSlider;
+
+		public Toggle OnOffButton;
+
+		private AudioClip[] _MusicList;
+
+		private AudioSource _MusicPlayer;
+
+		private int _musicPlayed;//to check while music we have active
+
+		void Awake()
 		{
-			BG_Menu,
-			BG_Tutorial,
-			BG_Lv1,
-			BG_Lv2
-		};
-
-		_MusicPlayer = GetComponent<AudioSource> ();
-
-		_musicPlayed = 10;
-	}
-
-
-	void Update () 
-	{
-		if (CheckIfOk()) 
-		{
-			if ((SceneManager.GetActiveScene ().buildIndex - 1) <= 0) 
+			DontDestroyOnLoad (gameObject);
+			_MusicList = new AudioClip[] 
 			{
-				if (!_MusicPlayer.isPlaying) 
+				BG_Menu,
+				BG_Tutorial,
+				BG_Lv1,
+				BG_Lv2
+			};
+
+			_MusicPlayer = GetComponent<AudioSource> ();
+
+			_musicPlayed = 100;
+		}
+
+
+		void Update () 
+		{
+			if(SceneManager.GetActiveScene ().buildIndex == 1)
+			{
+				if (OnOffButton.isOn)
 				{
-					Debug.Log ("I'm Play First!");
-					_MusicPlayer.clip = _MusicList [0];
-					_musicPlayed = 0;
+					_MusicPlayer.volume = AudioSlider.value;
+				} 
+				else
+				{
+					_MusicPlayer.volume = 0;
+				}
+
+
+			}
+
+			if (CheckIfOk()) 
+			{
+				if ((SceneManager.GetActiveScene ().buildIndex - 1) <= 0) 
+				{
+					if (!_MusicPlayer.isPlaying) 
+					{
+						//Debug.Log ("I'm Play First!");
+						_MusicPlayer.clip = _MusicList [0];
+						_musicPlayed = 0;
+						_MusicPlayer.Play ();
+					}
+				} 
+				else
+				{
+					//Debug.Log ("I'm Play Second!");
+					_MusicPlayer.clip = _MusicList [SceneManager.GetActiveScene ().buildIndex - 1];
+					_musicPlayed = SceneManager.GetActiveScene ().buildIndex - 1;
 					_MusicPlayer.Play ();
 				}
-			} 
-			else
-			{
-				Debug.Log ("I'm Play Second!");
-				_MusicPlayer.clip = _MusicList [SceneManager.GetActiveScene ().buildIndex - 1];
-				_musicPlayed = SceneManager.GetActiveScene ().buildIndex - 1;
-				_MusicPlayer.Play ();
 			}
 		}
 
-	}
-
-	public bool CheckIfOk()
-	{
-		Debug.Log ("I'm Checking!");
-		if((_musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1) || (_musicPlayed == 0 && SceneManager.GetActiveScene ().buildIndex - 1 <= 0))
+		public bool CheckIfOk()
 		{
-			return true;
-		}
-		else
-		{
-			return false;
+			//Debug.Log ("I'm Checking!");
+			if((_musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1) || (_musicPlayed == 0 && SceneManager.GetActiveScene ().buildIndex - 1 <= 0))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
-
 }

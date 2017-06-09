@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelSelection : MonoBehaviour 
+namespace Musica
 {
-	// Update is called once per frame
-	public void GoToLevel (int lastLevel)
+	public class LevelSelection : MonoBehaviour 
 	{
-		SceneManager.LoadScene (lastLevel);
+		// Update is called once per frame
+		public void GoToLevel (int lastLevel)
+		{
+			SceneManager.LoadScene (lastLevel);
+		}
 	}
 }
