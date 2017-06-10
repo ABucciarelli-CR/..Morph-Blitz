@@ -25,7 +25,18 @@ namespace Musica
 
 		void Awake()
 		{
+
 			DontDestroyOnLoad (gameObject);
+
+			if (FindObjectsOfType (GetType ()).Length > 1)
+			{
+				Destroy (gameObject);
+			}
+
+		}
+
+		void Start()
+		{
 			_MusicList = new AudioClip[] 
 			{
 				BG_Menu,
@@ -44,6 +55,16 @@ namespace Musica
 		{
 			if(SceneManager.GetActiveScene ().buildIndex == 1)
 			{
+				if (AudioSlider == null) 
+				{
+					AudioSlider = Slider.FindObjectOfType<Slider>();
+				}
+
+				if(OnOffButton == null)
+				{
+					OnOffButton = Toggle.FindObjectOfType<Toggle>();
+				}
+
 				if (OnOffButton.isOn)
 				{
 					_MusicPlayer.volume = AudioSlider.value;
@@ -52,7 +73,6 @@ namespace Musica
 				{
 					_MusicPlayer.volume = 0;
 				}
-
 
 			}
 
