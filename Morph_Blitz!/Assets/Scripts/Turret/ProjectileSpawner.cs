@@ -14,7 +14,7 @@ public class ProjectileSpawner : MonoBehaviour {
 	public RaycastHit _hit;
 	public GameObject _EN;
 	private float _comparedTime = 0.2f;
-	[SerializeField]private float _shootPower = 20f;
+	[SerializeField]private float _shootPower = 3000f;
 
 	void Start()
 	{
