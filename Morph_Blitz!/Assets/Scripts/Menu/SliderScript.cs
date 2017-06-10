@@ -10,12 +10,18 @@ namespace Musica
 
 		public Slider AudioSlider;
 
+		public MusicManager musicManager;
+
 		//private AudioSource _AudioSource;
 
 		// Use this for initialization
-		void Start () 
+		void Awake () 
 		{
 			//AudioSlider = GetComponent<Slider> ();
+			if (musicManager._MusicPlayer.volume != .5f) 
+			{
+				AudioSlider.value = musicManager._MusicPlayer.volume;
+			}
 		}
 		
 		// Update is called once per frame

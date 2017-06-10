@@ -13,13 +13,13 @@ namespace Musica
 		public AudioClip BG_Lv1;
 		public AudioClip BG_Lv2;
 
+		public AudioSource _MusicPlayer;
+
 		public Slider AudioSlider;
 
 		public Toggle OnOffButton;
 
 		private AudioClip[] _MusicList;
-
-		private AudioSource _MusicPlayer;
 
 		private int _musicPlayed;//to check while music we have active
 
@@ -55,6 +55,12 @@ namespace Musica
 		{
 			if(SceneManager.GetActiveScene ().buildIndex == 1)
 			{
+				/*
+				if (_MusicPlayer.volume != .5f) 
+				{
+					AudioSlider.value = _MusicPlayer.volume;
+				}*/
+
 				if (AudioSlider == null) 
 				{
 					AudioSlider = Slider.FindObjectOfType<Slider>();
