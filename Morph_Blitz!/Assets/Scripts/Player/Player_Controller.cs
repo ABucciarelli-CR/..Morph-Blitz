@@ -304,7 +304,7 @@ public class Player_Controller : MonoBehaviour
 		if (_rot != 0) 
 		{
 			Debug.Log ("La mamma puttana che si ruota");
-			_Rigidbody.AddRelativeTorque(0, _rotate * (Time.deltaTime * 30), 0);
+			_Rigidbody.AddRelativeTorque(new Vector3(0, _rotate, 0), ForceMode.Force);
 			if (_Rigidbody.angularVelocity.magnitude > maxRotate) 
 			{
 				_Rigidbody.angularVelocity = _Rigidbody.angularVelocity.normalized * maxRotate;

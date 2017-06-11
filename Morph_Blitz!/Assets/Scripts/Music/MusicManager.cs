@@ -8,18 +8,34 @@ namespace Musica
 {
 	public class MusicManager : MonoBehaviour 
 	{
+		[Header("Boring Music")]
+		// musicList 1
 		public AudioClip BG_Menu;
 		public AudioClip BG_Tutorial;
 		public AudioClip BG_Lv1;
 		public AudioClip BG_Lv2;
 
+		[Header("ULTRA EPIK FUNKY MUSIKKKK")]
+		//musicList 2
+		public AudioClip BG_MenuFM;
+		public AudioClip BG_TutorialFM;
+		public AudioClip BG_Lv1FM;
+		public AudioClip BG_Lv2FM;
+
+		[Header("Other")]
 		public AudioSource _MusicPlayer;
 
 		public Slider AudioSlider;
 
 		public Toggle OnOffButton;
 
-		private AudioClip[] _MusicList;
+		public Dropdown ChangeMusic;
+
+		private AudioClip[] _MusicList1;
+		private AudioClip[] _MusicList2;
+
+		private bool _changeTipeOfMusic = false;
+		private int _afterChangeMusicValue = 1;//the value of ChangeMusic before the change of the music
 
 		private int _musicPlayed;//to check while music we have active
 
@@ -37,12 +53,20 @@ namespace Musica
 
 		void Start()
 		{
-			_MusicList = new AudioClip[] 
+			_MusicList1 = new AudioClip[] 
 			{
 				BG_Menu,
 				BG_Tutorial,
 				BG_Lv1,
 				BG_Lv2
+			};
+
+			_MusicList2 = new AudioClip[] 
+			{
+				BG_MenuFM,
+				BG_TutorialFM,
+				BG_Lv1FM,
+				BG_Lv2FM
 			};
 
 			_MusicPlayer = GetComponent<AudioSource> ();
@@ -71,6 +95,11 @@ namespace Musica
 					OnOffButton = Toggle.FindObjectOfType<Toggle>();
 				}
 
+				if(ChangeMusic == null)
+				{
+					ChangeMusic = Dropdown.FindObjectOfType<Dropdown>();
+				}
+
 				if (OnOffButton.isOn)
 				{
 					_MusicPlayer.volume = AudioSlider.value;
@@ -84,23 +113,26 @@ namespace Musica
 
 			if (CheckIfOk()) 
 			{
-				if ((SceneManager.GetActiveScene ().buildIndex - 1) <= 0) 
+				if(_afterChangeMusicValue != ChangeMusic.value)
 				{
-					if (!_MusicPlayer.isPlaying) 
-					{
-						//Debug.Log ("I'm Play First!");
-						_MusicPlayer.clip = _MusicList [0];
-						_musicPlayed = 0;
-						_MusicPlayer.Play ();
-					}
-				} 
-				else
-				{
-					//Debug.Log ("I'm Play Second!");
-					_MusicPlayer.clip = _MusicList [SceneManager.GetActiveScene ().buildIndex - 1];
-					_musicPlayed = SceneManager.GetActiveScene ().buildIndex - 1;
-					_MusicPlayer.Play ();
+					_changeTipeOfMusic = true;
 				}
+
+				if (ChangeMusic.value == 0) 
+				{
+					Debug.Log ("Music1");
+					_afterChangeMusicValue = 0;
+
+					DoMusic (_MusicList1);
+				}
+				else if (ChangeMusic.value == 1) 
+				{
+					Debug.Log ("Music2");
+					_afterChangeMusicValue = 1;
+
+					DoMusic (_MusicList2);
+				}
+
 			}
 		}
 
@@ -115,6 +147,33 @@ namespace Musica
 			{
 				return false;
 			}
+		}
+
+		public void DoMusic(AudioClip[] MusicList)
+		{
+			if ((SceneManager.GetActiveScene ().buildIndex - 1) <= 0) 
+			{
+				if (!_MusicPlayer.isPlaying || _changeTipeOfMusic == true) 
+				{
+					Debug.Log ("I'm Play First!");
+					_changeTipeOfMusic = false;
+					_MusicPlayer.clip = MusicList [0];
+					_musicPlayed = 0;
+					_MusicPlayer.Play ();
+				}
+			} 
+			else 
+			{
+				if (!_MusicPlayer.isPlaying || _changeTipeOfMusic == true) 
+				{
+					Debug.Log ("I'm Play Second!");
+					_changeTipeOfMusic = false;
+					_MusicPlayer.clip = MusicList [SceneManager.GetActiveScene ().buildIndex - 1];
+					_musicPlayed = SceneManager.GetActiveScene ().buildIndex - 1;
+					_MusicPlayer.Play ();
+				}
+			}
+
 		}
 	}
 }
