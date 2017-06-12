@@ -7,14 +7,14 @@ public class ProjectileSpawner : MonoBehaviour {
 	public GameObject enemyPrefab;
 	public GameObject spawnPoint;
 	public GameObject EnemySpawn; //define the enemy controller
-	public float ShootingRange = 100f;
+	public float ShootingRange = 10000f;
 
 	public float spawnTime = 3f;
 
 	public RaycastHit _hit;
 	public GameObject _EN;
 	private float _comparedTime = 0.2f;
-	[SerializeField]private float _shootPower = 3000f;
+	[SerializeField]private float _shootPower = 3500f;
 
 	void Start()
 	{
@@ -50,7 +50,7 @@ public class ProjectileSpawner : MonoBehaviour {
 
 		//Debug.Log (_hit.collider.gameObject.name);
 
-		if (_hit.collider.name == "Body" && _hit.distance <= ShootingRange)
+		if (_hit.transform.name == "Body" && _hit.distance <= ShootingRange)
 		{
 			return true;
 		}

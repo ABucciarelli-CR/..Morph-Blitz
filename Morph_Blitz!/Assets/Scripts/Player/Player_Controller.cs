@@ -303,7 +303,7 @@ public class Player_Controller : MonoBehaviour
 		//Rotate player
 		if (_rot != 0) 
 		{
-			Debug.Log ("La mamma puttana che si ruota");
+			//Debug.Log ("La mamma puttana che si ruota");
 			_Rigidbody.AddRelativeTorque(new Vector3(0, _rotate, 0), ForceMode.Force);
 			if (_Rigidbody.angularVelocity.magnitude > maxRotate) 
 			{
@@ -321,7 +321,7 @@ public class Player_Controller : MonoBehaviour
 				Debug.Log ("In IsMoreSlowThanBefore");
 				VelocitySmoother (_velocity);
 			}*/
-			Debug.Log ("La mamma puttana che si muove");
+			//Debug.Log ("La mamma puttana che si muove");
 			_Rigidbody.AddRelativeForce (0, 0, _velocity);
 			if (_Rigidbody.velocity.magnitude > maxVelocity) 
 			{
@@ -336,7 +336,7 @@ public class Player_Controller : MonoBehaviour
 	//do the power-down of the player
 	public void Depowerator(float plyrAdherence, float plyrAngularVelocity,float plyrVelocity, float depAdherence, float depAngularVelocity, float depVelocity)
 	{
-		Debug.Log ("My vel = " + plyrVelocity);
+		//Debug.Log ("My vel = " + plyrVelocity);
 		if ((plyrAdherence - (_childNum * depAdherence)) > MinAdherence) 
 		{
 			adherence = plyrAdherence - (_childNum * depAdherence);
@@ -371,7 +371,7 @@ public class Player_Controller : MonoBehaviour
 
 		if (IsMoreSlowThanBefore (maxVel)) 
 		{
-			Debug.Log (_smoothMaxVelocity);
+			//Debug.Log (_smoothMaxVelocity);
 			_smoothMaxVelocity -= _DecelerationSmooth * (Time.deltaTime * 10);
 		} 
 		return _smoothMaxVelocity;
@@ -382,12 +382,12 @@ public class Player_Controller : MonoBehaviour
 		// check if the maxVel of the player is minor than before
 		if (_smoothMaxVelocity >= maxVel)
 		{
-			Debug.Log (_smoothMaxVelocity + " true");
+			//Debug.Log (_smoothMaxVelocity + " true");
 			return true;
 		}
 		else 
 		{
-			Debug.Log (_smoothMaxVelocity + " false");
+			//Debug.Log (_smoothMaxVelocity + " false");
 			_smoothMaxVelocity = maxVel;
 			return false;
 		}
@@ -396,14 +396,14 @@ public class Player_Controller : MonoBehaviour
 
 	public void OnCollisionExit()
 	{
-		Debug.Log ("Tua madre sollevata");
+		//Debug.Log ("Tua madre sollevata");
 		_addExtraGravity = true;
 		//_Rigidbody.AddForce (0, -_Gravity, 0);
 	}
 
 	public void OnCollisionStay()
 	{
-		Debug.Log ("Tua madre atterrata");
+		//Debug.Log ("Tua madre atterrata");
 		_addExtraGravity = false;
 		//_Rigidbody.AddForce (0, -_Gravity, 0);
 	}

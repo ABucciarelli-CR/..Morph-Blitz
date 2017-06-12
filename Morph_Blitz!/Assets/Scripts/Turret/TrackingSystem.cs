@@ -11,7 +11,7 @@ public class TrackingSystem : MonoBehaviour
 
 	void Start () 
 	{
-		m_target = GameObject.Find ("Body");
+		m_target = GameObject.Find ("HitTarget");
 	}
 
 	// Update is called once per frame
