@@ -122,18 +122,20 @@ namespace Musica
 			{
 				//Debug.Log ("_musicPlayed = " + _musicPlayed);
 				//Debug.Log ("Active Scenes = " + SceneManager.GetActiveScene ().buildIndex);
-				/*if(_musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1)
+				/*
+				if(_musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1)
 				{
 					_changeTipeOfMusic = true;
-				}
-					*/
+				}*/
+					
 				if(_afterChangeMusicValue != _changeMusicValue)
 				{
 					_changeTipeOfMusic = true;
 				}
 
-				if(!_MusicPlayer.isPlaying || _musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1)
+				if(!_MusicPlayer.isPlaying || (_musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1 && SceneManager.GetActiveScene ().buildIndex - 1 >= 0))
 				{
+					//Debug.Log ("Change!");
 					_changeTipeOfMusic = true;
 				}
 					
@@ -170,7 +172,7 @@ namespace Musica
 
 		public void DoMusic(AudioClip[] MusicList)
 		{
-			Debug.Log ("IfPlay");
+			//Debug.Log ("IfPlay");
 
 			if (!_MusicPlayer.isPlaying || _changeTipeOfMusic == true) 
 			{
@@ -178,7 +180,7 @@ namespace Musica
 				switch (SceneManager.GetActiveScene ().buildIndex) 
 				{
 				case 0:
-					Debug.Log ("Case 0");
+					//Debug.Log ("Case 0");
 					_changeTipeOfMusic = false;
 					_musicPlayed = 0;
 					_MusicPlayer.clip = MusicList [0];
@@ -186,7 +188,7 @@ namespace Musica
 					break;
 
 				default:
-					Debug.Log ("Default");
+					//Debug.Log ("Default");
 					_changeTipeOfMusic = false;
 					_musicPlayed = SceneManager.GetActiveScene ().buildIndex - 1;
 					_MusicPlayer.clip = MusicList [SceneManager.GetActiveScene ().buildIndex - 1];
