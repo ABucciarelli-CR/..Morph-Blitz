@@ -31,6 +31,8 @@ namespace Musica
 
 		public Dropdown ChangeMusic;
 
+		private int _changeMusicValue;
+
 		private AudioClip[] _MusicList1;
 		private AudioClip[] _MusicList2;
 
@@ -100,6 +102,11 @@ namespace Musica
 					ChangeMusic = Dropdown.FindObjectOfType<Dropdown>();
 				}
 
+				if(ChangeMusic != null)
+				{
+					_changeMusicValue = ChangeMusic.value;
+				}
+
 				if (OnOffButton.isOn)
 				{
 					_MusicPlayer.volume = AudioSlider.value;
@@ -113,21 +120,33 @@ namespace Musica
 
 			if (CheckIfOk()) 
 			{
-				if(_afterChangeMusicValue != ChangeMusic.value)
+				//Debug.Log ("_musicPlayed = " + _musicPlayed);
+				//Debug.Log ("Active Scenes = " + SceneManager.GetActiveScene ().buildIndex);
+				/*if(_musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1)
+				{
+					_changeTipeOfMusic = true;
+				}
+					*/
+				if(_afterChangeMusicValue != _changeMusicValue)
 				{
 					_changeTipeOfMusic = true;
 				}
 
-				if (ChangeMusic.value == 0) 
+				if(!_MusicPlayer.isPlaying || _musicPlayed != SceneManager.GetActiveScene ().buildIndex - 1)
 				{
-					Debug.Log ("Music1");
+					_changeTipeOfMusic = true;
+				}
+					
+				if (_changeMusicValue == 0) 
+				{
+					//Debug.Log ("Music1");
 					_afterChangeMusicValue = 0;
 
 					DoMusic (_MusicList1);
 				}
-				else if (ChangeMusic.value == 1) 
+				else if (_changeMusicValue == 1) 
 				{
-					Debug.Log ("Music2");
+					//Debug.Log ("Music2");
 					_afterChangeMusicValue = 1;
 
 					DoMusic (_MusicList2);
@@ -151,11 +170,37 @@ namespace Musica
 
 		public void DoMusic(AudioClip[] MusicList)
 		{
+			Debug.Log ("IfPlay");
+
+			if (!_MusicPlayer.isPlaying || _changeTipeOfMusic == true) 
+			{
+				Debug.Log ("Play");
+				switch (SceneManager.GetActiveScene ().buildIndex) 
+				{
+				case 0:
+					Debug.Log ("Case 0");
+					_changeTipeOfMusic = false;
+					_musicPlayed = 0;
+					_MusicPlayer.clip = MusicList [0];
+					_MusicPlayer.Play ();
+					break;
+
+				default:
+					Debug.Log ("Default");
+					_changeTipeOfMusic = false;
+					_musicPlayed = SceneManager.GetActiveScene ().buildIndex - 1;
+					_MusicPlayer.clip = MusicList [SceneManager.GetActiveScene ().buildIndex - 1];
+					_MusicPlayer.Play ();
+					break;
+				}
+			}
+
+			/*
 			if ((SceneManager.GetActiveScene ().buildIndex - 1) <= 0) 
 			{
 				if (!_MusicPlayer.isPlaying || _changeTipeOfMusic == true) 
 				{
-					Debug.Log ("I'm Play First!");
+					//Debug.Log ("I'm Play First!");
 					_changeTipeOfMusic = false;
 					_MusicPlayer.clip = MusicList [0];
 					_musicPlayed = 0;
@@ -172,8 +217,7 @@ namespace Musica
 					_musicPlayed = SceneManager.GetActiveScene ().buildIndex - 1;
 					_MusicPlayer.Play ();
 				}
-			}
-
+			}*/
 		}
 	}
 }
