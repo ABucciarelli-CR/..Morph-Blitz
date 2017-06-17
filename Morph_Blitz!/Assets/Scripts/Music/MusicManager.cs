@@ -22,7 +22,8 @@ namespace Musica
 		public AudioClip BG_Lv1FM;
 		public AudioClip BG_Lv2FM;
 
-		[Header("Other")]
+		[Header("Other Variables")]
+		//other variables
 		public AudioSource _MusicPlayer;
 
 		public Slider AudioSlider;
@@ -31,7 +32,13 @@ namespace Musica
 
 		public Dropdown ChangeMusic;
 
+		public GlobalVariables globalVariables;
+
 		private int _changeMusicValue;
+
+		//variable for check the changing of scene
+		private int _lastSceneNumber = 100;
+		private bool _change = false;
 
 		private AudioClip[] _MusicList1;
 		private AudioClip[] _MusicList2;
@@ -79,6 +86,12 @@ namespace Musica
 
 		void Update () 
 		{
+			if (_lastSceneNumber != SceneManager.GetActiveScene ().buildIndex) 
+			{
+				Debug.Log ("_change = true");
+				_change = true;
+			}
+
 			if(SceneManager.GetActiveScene ().buildIndex == 1)
 			{
 				/*
@@ -86,26 +99,50 @@ namespace Musica
 				{
 					AudioSlider.value = _MusicPlayer.volume;
 				}*/
-
+	
+				//definition
+				//slider
 				if (AudioSlider == null) 
 				{
 					AudioSlider = Slider.FindObjectOfType<Slider>();
 				}
 
+				//on-off button
 				if(OnOffButton == null)
 				{
 					OnOffButton = Toggle.FindObjectOfType<Toggle>();
 				}
 
+				//changeMusic
 				if(ChangeMusic == null)
 				{
 					ChangeMusic = Dropdown.FindObjectOfType<Dropdown>();
 				}
 
-				if(ChangeMusic != null)
+				//changes
+				//check if first time with volume
+				if (_change == true) 
+				{
+					_lastSceneNumber = SceneManager.GetActiveScene ().buildIndex;
+					_change = false;
+					ChangeMusic.value = globalVariables.changeMusicValue;
+					OnOffButton.isOn = globalVariables.audioOn;
+					AudioSlider.value = globalVariables.audioVolume;
+				}
+				else
+				{
+					globalVariables.changeMusicValue = _changeMusicValue;
+					globalVariables.audioOn = OnOffButton.isOn;
+					globalVariables.audioVolume = AudioSlider.value;
+				}
+
+				//change the music
+				if (ChangeMusic != null) 
 				{
 					_changeMusicValue = ChangeMusic.value;
 				}
+
+				//check if first time with button
 
 				if (OnOffButton.isOn)
 				{
