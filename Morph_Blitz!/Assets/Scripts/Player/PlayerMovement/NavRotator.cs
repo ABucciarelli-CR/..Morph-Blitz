@@ -1,65 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
-[RequireComponent(typeof (Player_Controller))]
+
 public class NavRotator : MonoBehaviour 
 {
-	[SerializeField] private GameObject _Body; //define Body
-	[SerializeField] private GameObject _Body1; //define 1 form Body
-	[SerializeField] private GameObject _Body2; //define 2 form Body
-	[SerializeField] private GameObject _Body3; //define 3 form Body
-	[SerializeField] private float _RotateVelocity = 1f; //velocity to rotate
-	[SerializeField] private float _MaxAngleRotate = 10f; //velocity to rotate
-	[SerializeField] private float _MaxAngularVelocity = 500; // The maximum velocity the player can rotate at.
+	public Player_Move playerMove;
 
-	private float _rotation = 0f;
+	//in grades
+	public float maxRotation = 5f;
 
-	public void Update()
+	//other
+	public float rotationVelocity = .5f;
+
+	private float _rotation;
+	private int _remainSign = 1;
+	private float _toleranceToZero = .2f;
+	//public float Hor_Haxes;
+
+	private GameObject allVisibleBody;
+	private GameObject catalizer;
+
+
+	void Awake()
 	{
-		Rotate ();
+		allVisibleBody = GameObject.Find ("BodyCollector");
+		catalizer = GameObject.Find ("Catalizer");
 	}
 
-	//rotate Body
-	public void Rotate(GameObject body ,float _rot)
+	void Update()
 	{
-		//calcolate rotation
-		if (_rot == 0)
+
+	}
+
+	public void Rotate(float Hor_Axes)
+	{
+
+		if(Hor_Axes == 0f)
 		{
-			if (_rotation < 0) 
+			if( Mathf.Abs(allVisibleBody.transform.localEulerAngles.z) > _toleranceToZero)
 			{
-				_rotation += _RotateVelocity * Time.unscaledDeltaTime;
-				_rotation = Mathf.Clamp (_rotation, -_MaxAngleRotate, _MaxAngleRotate);
-
-				//Rotate player
-				body.transform.localEulerAngles = new Vector3( body.transform.localEulerAngles.x, body.transform.localEulerAngles.y, -_rotation);
-
-			} 
-			else if (_rotation > 0) 
-			{
-				_rotation += _RotateVelocity * Time.unscaledDeltaTime;
-				_rotation = Mathf.Clamp (_rotation, -_MaxAngleRotate, _MaxAngleRotate);
-
-				//Rotate player
-				body.transform.localEulerAngles = new Vector3( body.transform.localEulerAngles.x, body.transform.localEulerAngles.y, -_rotation);
-
+				Debug.Log ("I'm restabilizing!");
+				_rotation -= _remainSign * (rotationVelocity * (Time.deltaTime * 10));
 			}
-		} 
-		else 
-		{
-
-			//if player rotate, rotate
-			_rotation += _rot * _RotateVelocity * Time.deltaTime;
-			_rotation = Mathf.Clamp (_rotation, -_MaxAngleRotate, _MaxAngleRotate);
-
-			//Rotate player
-			body.transform.Rotate(0f, 0f, _rot * _RotateVelocity * Time.deltaTime);
-			//_Body.transform.localEulerAngles = new Vector3( _Body.transform.localEulerAngles.x, _Body.transform.localEulerAngles.y, -_rotation);
-
+			else
+			{
+				Debug.Log ("EulerAngles" + allVisibleBody.transform.localEulerAngles.z);
+				Debug.Log ("I'm stabilized!");
+			}
 		}
+		else
+		{
+			_remainSign *= (int)Mathf.Sign (Hor_Axes);
+			_rotation += Hor_Axes * (rotationVelocity * (Time.deltaTime * 10));
+		}
+			
+		_rotation = Mathf.Clamp (_rotation, -maxRotation, maxRotation);
 
-
+		allVisibleBody.transform.localEulerAngles = new Vector3 ( 0, 0, _rotation);
+		catalizer.transform.localEulerAngles =  new Vector3 ( catalizer.transform.localEulerAngles.x, catalizer.transform.localEulerAngles.y, _rotation);
 	}
-
 }
-*/
