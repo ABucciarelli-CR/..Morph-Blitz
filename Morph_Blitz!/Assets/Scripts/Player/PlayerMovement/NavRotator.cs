@@ -39,18 +39,32 @@ public class NavRotator : MonoBehaviour
 		{
 			if( Mathf.Abs(allVisibleBody.transform.localEulerAngles.z) > _toleranceToZero)
 			{
-				Debug.Log ("I'm restabilizing!");
-				_rotation -= _remainSign * (rotationVelocity * (Time.deltaTime * 10));
+				//Debug.Log ("I'm restabilizing!");
+				//Debug.Log (allVisibleBody.transform.localRotation.z);
+
+				if (allVisibleBody.transform.localRotation.z < 0)
+				{
+					//Debug.Log ("First");
+					_rotation += (rotationVelocity * (Time.deltaTime * 10));
+				} 
+				else 
+				{
+					//Debug.Log ("Second");
+					_rotation -= (rotationVelocity * (Time.deltaTime * 10));
+				}
+
+
 			}
+			/*
 			else
 			{
-				Debug.Log ("EulerAngles" + allVisibleBody.transform.localEulerAngles.z);
-				Debug.Log ("I'm stabilized!");
-			}
+				//Debug.Log ("EulerAngles" + allVisibleBody.transform.localEulerAngles.z);
+				//Debug.Log ("I'm stabilized!");
+			}*/
 		}
 		else
 		{
-			_remainSign *= (int)Mathf.Sign (Hor_Axes);
+			//_remainSign *= (int)Mathf.Sign (Hor_Axes);
 			_rotation += Hor_Axes * (rotationVelocity * (Time.deltaTime * 10));
 		}
 			
