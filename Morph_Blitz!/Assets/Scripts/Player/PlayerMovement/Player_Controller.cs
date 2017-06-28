@@ -12,10 +12,14 @@ public class Player_Controller : MonoBehaviour
 	[Header("Don't touch, it's MINE!")]
 	public GameObject PrincipalBody;//define the principalBody
 	public GameObject EnemySpawn; //define the enemy controller
+	public GameObject Camera;//define the camera of the player
 
 	private Rigidbody _Rigidbody;//define rigidbody
 	private Collider _col;//define the collider
 	private float maxDistToGround = 5f;
+
+	private float _NormalFOV = 50f;//the normal fov of the camera
+	private float _MaxFOV = 70f;//the normal fov of the camera
 
 	private bool _addExtraGravity;//if player don't collide add it
 
@@ -37,6 +41,9 @@ public class Player_Controller : MonoBehaviour
 
 	[Header("Gravity")]
 	[SerializeField] private float _Gravity = 60;
+
+	[Header("% of Max Velocity to do fov")]
+	[SerializeField] private float _Percentual = 80;// the % of MaxVel to Modify Fov
 
 	[Header("Enemy Depotentation")]
 	//enemy type1 PowerDown modifier
@@ -150,6 +157,24 @@ public class Player_Controller : MonoBehaviour
 
 	public void Update()
 	{
+		//check if player was a least 80% of max velocity
+		if(IsAlmostMaxVelocity(YellowMAXVelocity, _Percentual))
+		{
+			//Debug.Log ("80 miglia orarieeeee!!!");
+			if (Camera.GetComponent<Camera> ().fieldOfView < _MaxFOV) 
+			{
+				Camera.GetComponent<Camera> ().fieldOfView += (Time.deltaTime * 10);
+			}
+
+		}
+		else
+		{
+			//Debug.Log ("Nope 80 miglia orarieeeee...");
+			if (Camera.GetComponent<Camera> ().fieldOfView > _NormalFOV) 
+			{
+				Camera.GetComponent<Camera> ().fieldOfView -= (Time.deltaTime * 10);
+			}
+		}
 
 	}
 
@@ -393,6 +418,18 @@ public class Player_Controller : MonoBehaviour
 		}
 	}
 
+	public bool IsAlmostMaxVelocity(float maxVel, float percentual)
+	{
+		//Debug.Log ((_Rigidbody.velocity.magnitude / 100) * percentual);
+		if (_Rigidbody.velocity.magnitude >= (maxVel / 100) * percentual) 
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	public void OnCollisionExit()
 	{
