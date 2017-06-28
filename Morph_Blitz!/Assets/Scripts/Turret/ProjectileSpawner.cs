@@ -9,11 +9,11 @@ public class ProjectileSpawner : MonoBehaviour {
 	public GameObject EnemySpawn; //define the enemy controller
 	public float ShootingRange = 10000f;
 
-	private float spawnTime = .2f;
+	private float spawnTime = .35f;
 
 	public RaycastHit _hit;
 	public GameObject _EN;
-	private float _comparedTime = 0.2f;
+	private float _comparedTime = 0.1f;
 	/*[SerializeField]*/private float _shootPower = 4000f;
 
 	void Start()
