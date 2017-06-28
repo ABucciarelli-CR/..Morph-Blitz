@@ -13,7 +13,7 @@ public class NavRotator : MonoBehaviour
 	public float rotationVelocity = .5f;
 
 	private float _rotation;
-	private int _remainSign = 1;
+	//private int _remainSign = 1;
 	private float _toleranceToZero = .2f;
 	//public float Hor_Haxes;
 
