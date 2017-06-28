@@ -6,8 +6,10 @@ public class TrackingSystem : MonoBehaviour
 {
 	public float speed = 3.0f;
 	public GameObject m_target;
+	public float lookingRange = 0.5f;
 	Vector3 m_lastKnownPosition = Vector3.zero;
 	Quaternion m_lookAtRotation;
+
 
 	void Start () 
 	{
@@ -21,7 +23,7 @@ public class TrackingSystem : MonoBehaviour
 		{
 			if(m_lastKnownPosition != m_target.transform.position)
 			{
-				m_lastKnownPosition = m_target.transform.position;
+				m_lastKnownPosition = new Vector3(Random.Range(m_target.transform.position.x-lookingRange, m_target.transform.position.x+lookingRange), Random.Range(m_target.transform.position.y-lookingRange, m_target.transform.position.y+lookingRange), Random.Range(m_target.transform.position.z-lookingRange, m_target.transform.position.z+lookingRange));
 				m_lookAtRotation = Quaternion.LookRotation(m_lastKnownPosition - transform.position);
 			}
 
