@@ -86,9 +86,9 @@ namespace Musica
 
 		void Update () 
 		{
-			if (_lastSceneNumber != SceneManager.GetActiveScene ().buildIndex) 
+			if (_lastSceneNumber != SceneManager.GetActiveScene ().buildIndex && _change != true) 
 			{
-				Debug.Log ("_change = true");
+				//Debug.Log ("_change = true");
 				_change = true;
 			}
 
@@ -213,7 +213,7 @@ namespace Musica
 
 			if (!_MusicPlayer.isPlaying || _changeTipeOfMusic == true) 
 			{
-				Debug.Log ("Play");
+				//Debug.Log ("Play");
 				switch (SceneManager.GetActiveScene ().buildIndex) 
 				{
 				case 0:
