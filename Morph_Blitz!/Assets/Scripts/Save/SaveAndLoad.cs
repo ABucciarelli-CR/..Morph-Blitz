@@ -34,7 +34,7 @@ public static class SaveAndLoad
 
 			file.Close();
 
-			Debug.Log ("CNG MSC = " + data.changeMusicValue);
+			//Debug.Log ("CNG MSC = " + data.changeMusicValue);
 			return data.changeMusicValue;
 		}
 		else
@@ -54,7 +54,7 @@ public static class SaveAndLoad
 
 			file.Close();
 
-			Debug.Log ("Audio ON = " + data.audioOn);
+			//Debug.Log ("Audio ON = " + data.audioOn);
 			return data.audioOn;
 		}
 		else
@@ -74,7 +74,7 @@ public static class SaveAndLoad
 
 			file.Close();
 
-			Debug.Log ("Volume = " + data.volume);
+			//Debug.Log ("Volume = " + data.volume);
 			return data.volume;
 		}
 		else

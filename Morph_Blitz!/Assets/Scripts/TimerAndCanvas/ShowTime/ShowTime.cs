@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ShowTime : MonoBehaviour 
 {
 	public GlobalVariables globalVariables;
+	public SaveManager saveManager;
 	public Text TimeToDo;
 	public Text TimeDoing;
 
@@ -19,6 +20,7 @@ public class ShowTime : MonoBehaviour
 	private float[] _levelTimeDone;
 
 	private GameObject _global;
+	private GameObject _save;
 
 	void Awake()
 	{
@@ -37,6 +39,9 @@ public class ShowTime : MonoBehaviour
 
 		_global = GameObject.Find("_GlobalVariables");
 		globalVariables = _global.GetComponent<GlobalVariables> ();
+
+		_save = GameObject.Find("_SaveManager");
+		saveManager = _save.GetComponent<SaveManager> ();
 	}
 	
 	// Update is called once per frame
@@ -50,7 +55,14 @@ public class ShowTime : MonoBehaviour
 			if (Level != SceneManager.GetActiveScene ().buildIndex && SceneManager.GetActiveScene ().buildIndex != 2)
 			{
 				Level = SceneManager.GetActiveScene ().buildIndex;
-				globalVariables.LevelTimeDone [Level - 1] = Mathf.Round (_TimeInDoing * 100)/100;
+
+				if(globalVariables.LevelTimeDone [Level - 1] >  Mathf.Round (_TimeInDoing * 100)/100 || globalVariables.LevelTimeDone [Level - 1] == 0)
+				{
+					Debug.Log ("SavingTime!");
+					globalVariables.LevelTimeDone [Level - 1] = Mathf.Round (_TimeInDoing * 100)/100;
+					saveManager.Save ();
+				}
+
 				_TimeInDoing = 0;
 			}
 		}

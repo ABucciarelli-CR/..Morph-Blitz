@@ -27,9 +27,14 @@ public class SaveManager : MonoBehaviour
 	{
 		if (_level != SceneManager.GetActiveScene ().buildIndex)
 		{
-			//Debug.Log ("I'm Saving!");
-			_level = SceneManager.GetActiveScene ().buildIndex;
-			SaveAndLoad.Save (globalVariables);
+			Save ();
 		}
+	}
+
+	public void Save()
+	{
+		//Debug.Log ("I'm Saving!");
+		_level = SceneManager.GetActiveScene ().buildIndex;
+		SaveAndLoad.Save (globalVariables);
 	}
 }

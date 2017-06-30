@@ -27,6 +27,7 @@ public class GlobalVariables : MonoBehaviour
 	public float t_Level2 = 60f;
 	public float t_Level3 = 60f;
 	public float t_Level4 = 60f;
+	public float t_Level5 = 60f;
 
 
 	void Awake()
@@ -50,12 +51,14 @@ public class GlobalVariables : MonoBehaviour
 			t_Level1,
 			t_Level2,
 			t_Level3,
-			t_Level4
+			t_Level4,
+			t_Level5
 
 		};
 
 		LevelTimeDone = new float[] 
 		{
+			0,
 			0,
 			0,
 			0,
