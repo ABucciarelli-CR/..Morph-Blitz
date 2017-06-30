@@ -11,11 +11,14 @@ public static class SaveAndLoad
 	public static void Save(GlobalVariables globalVariables)
 	{
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file =  new FileStream (Application.persistentDataPath + "/MorpfSaves.txt", FileMode.Create);;
+		FileStream file =  new FileStream (Application.persistentDataPath + "/MorpfSaves.txt", FileMode.Create);
 
 		DataToSave data = new DataToSave (globalVariables);
 
+		//Debug.Log ("GV Volume = " + globalVariables.audioVolume);
+
 		bf.Serialize (file, data);
+
 		file.Close();
 
 	}
@@ -31,6 +34,7 @@ public static class SaveAndLoad
 
 			file.Close();
 
+			Debug.Log ("CNG MSC = " + data.changeMusicValue);
 			return data.changeMusicValue;
 		}
 		else
@@ -50,6 +54,7 @@ public static class SaveAndLoad
 
 			file.Close();
 
+			Debug.Log ("Audio ON = " + data.audioOn);
 			return data.audioOn;
 		}
 		else
@@ -69,6 +74,7 @@ public static class SaveAndLoad
 
 			file.Close();
 
+			Debug.Log ("Volume = " + data.volume);
 			return data.volume;
 		}
 		else
@@ -110,6 +116,9 @@ public class DataToSave
 
 	public DataToSave (GlobalVariables globalVariables)
 	{
+
+		//Debug.Log ("GV Volume = " + globalVariables.audioVolume);
+
 		changeMusicValue = globalVariables.changeMusicValue;
 
 		audioOn = globalVariables.audioOn;

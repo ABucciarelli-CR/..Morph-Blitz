@@ -39,7 +39,7 @@ namespace Musica
 		private int _changeMusicValue;
 
 		//variable for check the changing of scene
-		private int _lastSceneNumber = 100;
+		private int _lastSceneNumber = 1;
 		private bool _change = false;
 
 		private AudioClip[] _MusicList1;
@@ -139,6 +139,7 @@ namespace Musica
 						Debug.Log ("I'm Loading!");
 
 						_AlreadyLoaded = true;
+						_change = true;
 
 						globalVariables.changeMusicValue = SaveAndLoad.LoadChangeMusic();
 						globalVariables.audioOn = SaveAndLoad.LoadAudio();
