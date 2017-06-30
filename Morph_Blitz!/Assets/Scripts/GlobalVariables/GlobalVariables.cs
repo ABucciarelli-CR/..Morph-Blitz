@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System;
 
+[Serializable]
 public class GlobalVariables : MonoBehaviour 
 {
 	//music
@@ -37,6 +41,7 @@ public class GlobalVariables : MonoBehaviour
 
 	void Start()
 	{
+
 		LevelTimeToDo = new float[]
 		{
 			0,

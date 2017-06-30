@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Musica
 {
@@ -48,16 +50,16 @@ namespace Musica
 
 		private int _musicPlayed;//to check while music we have active
 
+		private bool _AlreadyLoaded = false;//check if we already loaded the saves
+
 		void Awake()
 		{
-
 			DontDestroyOnLoad (gameObject);
 
 			if (FindObjectsOfType (GetType ()).Length > 1)
 			{
 				Destroy (gameObject);
 			}
-
 		}
 
 		void Start()
@@ -131,9 +133,26 @@ namespace Musica
 				}
 				else
 				{
-					globalVariables.changeMusicValue = _changeMusicValue;
-					globalVariables.audioOn = OnOffButton.isOn;
-					globalVariables.audioVolume = AudioSlider.value;
+					//check if we have saved
+					if (File.Exists (Application.persistentDataPath + "/MorpfSaves.txt") && _AlreadyLoaded == false) 
+					{
+						Debug.Log ("I'm Loading!");
+
+						_AlreadyLoaded = true;
+
+						globalVariables.changeMusicValue = SaveAndLoad.LoadChangeMusic();
+						globalVariables.audioOn = SaveAndLoad.LoadAudio();
+						globalVariables.audioVolume = SaveAndLoad.LoadVolume();
+
+						globalVariables.LevelTimeDone = SaveAndLoad.LoadLevelTimeDone();
+
+					}
+					else
+					{
+						globalVariables.changeMusicValue = _changeMusicValue;
+						globalVariables.audioOn = OnOffButton.isOn;
+						globalVariables.audioVolume = AudioSlider.value;
+					}
 				}
 
 				//change the music

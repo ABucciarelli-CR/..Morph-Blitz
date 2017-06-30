@@ -20,7 +20,6 @@ public class ShowTime : MonoBehaviour
 
 	private GameObject _global;
 
-
 	void Awake()
 	{
 		DontDestroyOnLoad (gameObject);
@@ -30,11 +29,13 @@ public class ShowTime : MonoBehaviour
 			Destroy (gameObject);
 		}
 	}
+
 	// Use this for initialization
 	void Start () 
 	{
-		_global = GameObject.Find("_GlobalVariables");
 		Level = SceneManager.GetActiveScene ().buildIndex;
+
+		_global = GameObject.Find("_GlobalVariables");
 		globalVariables = _global.GetComponent<GlobalVariables> ();
 	}
 	
@@ -45,7 +46,7 @@ public class ShowTime : MonoBehaviour
 		{
 			TimeToDo.gameObject.SetActive (true);
 			TimeDoing.gameObject.SetActive (true);
-			TimeToDo.text = globalVariables.LevelTimeToDo [SceneManager.GetActiveScene ().buildIndex].ToString();
+			TimeToDo.text = globalVariables.LevelTimeToDo [SceneManager.GetActiveScene ().buildIndex].ToString("0.00");
 			if (Level != SceneManager.GetActiveScene ().buildIndex && SceneManager.GetActiveScene ().buildIndex != 2)
 			{
 				Level = SceneManager.GetActiveScene ().buildIndex;
