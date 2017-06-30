@@ -6,9 +6,11 @@ public class Spin : MonoBehaviour {
 
 	public float speed = 100f;
 	public GameObject SpiningCube;
+	public GameObject explosion;
 	private bool entered=false;
 	private float currentpos;
 	private float maxheight = 3.0f;
+
 
 
 	void Awake ()
@@ -32,5 +34,14 @@ public class Spin : MonoBehaviour {
 	void OnTriggerEnter (Collider col)
 	{
 		entered = true;
+	}
+
+	void OnCollisionEnter (Collision cubecol)
+	{
+		if (cubecol.gameObject.CompareTag ("PlayerMod3")) 
+		{
+			Instantiate(explosion, transform.position, transform.rotation);
+			Destroy (gameObject);
+		}
 	}
 }
