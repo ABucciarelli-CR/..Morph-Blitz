@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/_HomePage.unity
+- path: Assets/_Scenes/_Tutorial.unity
   isLoaded: 1
   isActive: 1

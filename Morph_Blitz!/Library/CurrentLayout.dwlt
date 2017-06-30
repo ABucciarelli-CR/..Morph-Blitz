@@ -176,8 +176,8 @@ MonoBehaviour:
     y: 0
     width: 482
     height: 513
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -365,9 +365,9 @@ MonoBehaviour:
     height: 492
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: fcf9ffff
-    m_LastClickedID: -1540
-    m_ExpandedIDs: 50fbffff00000000
+    m_SelectedIDs: 8c250000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 7aedffffe4fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -386,7 +386,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
   m_ExpandedScenes:
-  - _HomePage
+  - _Tutorial
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -422,9 +422,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 531.69995, y: 233.84706, z: 296.63632}
+    m_Target: {x: 1.6779943, y: 26.481901, z: 21.633423}
     speed: 2
-    m_Value: {x: 531.69995, y: 233.84706, z: 296.63632}
+    m_Value: {x: 1.6779943, y: 26.481901, z: 21.633423}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -447,13 +447,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.036330324, y: 0.0030816768, z: -0.00012592877, w: -0.99933505}
+    m_Target: {x: -0.0012761393, y: 0.91598094, z: -0.40120894, w: -0.002947523}
     speed: 2
-    m_Value: {x: -0.03633032, y: 0.0030816766, z: -0.00012592877, w: -0.999335}
+    m_Value: {x: -0.0012761393, y: 0.91598094, z: -0.40120894, w: -0.002947523}
   m_Size:
-    m_Target: 861.14075
+    m_Target: 9.449406
     speed: 2
-    m_Value: 861.14075
+    m_Value: 9.449406
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -527,19 +527,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts/Save
+    - Assets/Prefab
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Scripts/Save
+  - Assets/Prefab
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\Alessio\Documents\GitKraken\..Morph-Blitz\Morph_Blitz!
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 87}
-    m_SelectedIDs: bc260000
-    m_LastClickedID: 9916
-    m_ExpandedIDs: 0000000092250000b8250000c42500001e270000282700009a270000862a0000882a00008a2a000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 71}
+    m_SelectedIDs: 5a260000
+    m_LastClickedID: 9818
+    m_ExpandedIDs: 00000000122500003825000044250000a6260000242700001e2a0000202a0000222a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -567,7 +567,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000092250000b8250000c42500001e270000282700009a270000862a0000882a00008a2a0000
+    m_ExpandedIDs: 00000000122500003825000044250000a6260000b0260000242700001e2a0000202a0000222a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: fc24000010250000ae25000008250000c22500006e25000006250000a0260000322800000e250000aa250000c42500000000000086290000c8280000782700002c270000202500002a2500003025000000270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

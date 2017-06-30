@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistruttibileConRosso : MonoBehaviour {
+public class DistruttibileConRosso : MonoBehaviour
+{
 
+	public GameObject explosion;
 
 	// Use this for initialization
 	void Start () 
@@ -17,16 +19,13 @@ public class DistruttibileConRosso : MonoBehaviour {
 		
 	}
 
-	void OnTriggerEnter (Collider col)
+	void OnCollisionEnter (Collision col)
+	{
+		if (col.gameObject.CompareTag ("PlayerMod3"))
 		{
-		if (col.gameObject.CompareTag ("PlayerMod3") || col.gameObject.GetComponent<Rigidbody> ().mass == 0.01f) {
-			//Destroy (gameObject);
-			gameObject.GetComponent<Rigidbody> ().mass = 0.01f;
-
-		} else 
-		{
-			gameObject.GetComponent<Rigidbody> ().mass = 10f;
-		}
+			Instantiate (explosion, transform.position, transform.rotation);
+			Destroy (gameObject);
 
 		}
+	}
 }
