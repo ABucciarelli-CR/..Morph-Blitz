@@ -19,7 +19,7 @@ public class Player_Controller : MonoBehaviour
 	private float maxDistToGround = 5f;
 
 	private float _NormalFOV = 50f;//the normal fov of the camera
-	private float _MaxFOV = 70f;//the normal fov of the camera
+	private float _MaxFOV = 80f;//the normal fov of the camera
 
 	private bool _addExtraGravity;//if player don't collide add it
 
@@ -86,7 +86,7 @@ public class Player_Controller : MonoBehaviour
 	[Header("Variable of 2nd Form")]
 	//2nd form
 	[SerializeField] private float _YellowMovePower = 9; // The force added to move in 2nd mode
-	[SerializeField] private float _YellowRotatePower = 4f; // The force added to rotate in 2nd mode
+	[SerializeField] private float _YellowRotatePower = 2f; // The force added to rotate in 2nd mode
 	public float YellowMAXVelocity = 40; // The max velocity in 2nd mode
 	public float YellowMaxAngularVelocity = .2f; // The maximum velocity the player can rotate at in 2nd mode
 	public float YellowMAXAdherence = 1; // The max Adherence in 2nd mode
