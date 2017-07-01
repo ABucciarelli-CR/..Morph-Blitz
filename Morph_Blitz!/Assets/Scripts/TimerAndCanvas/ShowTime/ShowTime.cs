@@ -72,9 +72,13 @@ public class ShowTime : MonoBehaviour
 			TimeDoing.gameObject.SetActive (false);
 		}
 
-		//time update
-		timeInDoing += Time.deltaTime;
-		//Debug.Log (_TimeInDoing);
-		TimeDoing.text = (Mathf.Round(timeInDoing * 100)/100).ToString ("0.00");
+		if(SceneManager.GetActiveScene ().buildIndex != 0 && SceneManager.GetActiveScene ().buildIndex != 1)
+		{
+			//time update
+			timeInDoing += Time.deltaTime;
+			//Debug.Log (_TimeInDoing);
+			TimeDoing.text = (Mathf.Round(timeInDoing * 100)/100).ToString ("0.00");
+		}
+
 	}
 }
