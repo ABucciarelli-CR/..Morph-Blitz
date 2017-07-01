@@ -12,6 +12,7 @@ public class GlobalVariables : MonoBehaviour
 	public float audioVolume = .5f;
 
 	public bool audioOn = true;
+	public bool noPause = false;//4 the chicca finale
 
 	public int changeMusicValue = 0;
 

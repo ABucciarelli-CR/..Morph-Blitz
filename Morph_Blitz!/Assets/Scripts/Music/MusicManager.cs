@@ -36,6 +36,8 @@ namespace Musica
 
 		public GlobalVariables globalVariables;
 
+		public bool ChangeForLast = false;
+
 		private int _changeMusicValue;
 
 		//variable for check the changing of scene
@@ -88,6 +90,11 @@ namespace Musica
 
 		void Update () 
 		{
+			if (ChangeForLast == true)
+			{
+				_MusicPlayer.volume = 0;
+			}
+
 			if (_lastSceneNumber != SceneManager.GetActiveScene ().buildIndex && _change != true) 
 			{
 				//Debug.Log ("_change = true");

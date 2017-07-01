@@ -11,10 +11,10 @@ public class ShowTime : MonoBehaviour
 	public Text TimeToDo;
 	public Text TimeDoing;
 
+	public float timeInDoing = 0;//the time we're going to do
+
 
 	private int Level = 0;//the level we are
-
-	private float _TimeInDoing = 0;//the time we're going to do
 
 	private float[] _levelTimeTodo;
 	private float[] _levelTimeDone;
@@ -56,14 +56,14 @@ public class ShowTime : MonoBehaviour
 			{
 				Level = SceneManager.GetActiveScene ().buildIndex;
 
-				if(globalVariables.LevelTimeDone [Level - 1] >  Mathf.Round (_TimeInDoing * 100)/100 || globalVariables.LevelTimeDone [Level - 1] == 0)
+				if(globalVariables.LevelTimeDone [Level - 1] >  Mathf.Round (timeInDoing * 100)/100 || globalVariables.LevelTimeDone [Level - 1] == 0)
 				{
 					Debug.Log ("SavingTime!");
-					globalVariables.LevelTimeDone [Level - 1] = Mathf.Round (_TimeInDoing * 100)/100;
+					globalVariables.LevelTimeDone [Level - 1] = Mathf.Round (timeInDoing * 100)/100;
 					saveManager.Save ();
 				}
 
-				_TimeInDoing = 0;
+				timeInDoing = 0;
 			}
 		}
 		else
@@ -73,8 +73,8 @@ public class ShowTime : MonoBehaviour
 		}
 
 		//time update
-		_TimeInDoing += Time.deltaTime;
+		timeInDoing += Time.deltaTime;
 		//Debug.Log (_TimeInDoing);
-		TimeDoing.text = (Mathf.Round(_TimeInDoing * 100)/100).ToString ("0.00");
+		TimeDoing.text = (Mathf.Round(timeInDoing * 100)/100).ToString ("0.00");
 	}
 }
